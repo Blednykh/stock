@@ -1,0 +1,29 @@
+.portfolio{
+    width: 300px;
+    text-align: left;
+    overflow: hidden;
+}
+.accInfo{
+    width: 100%;
+    background: #545355;
+    padding: 5px 10px ;
+    position: relative;
+}
+#DaD{
+    position: absolute;
+    right: 30px;
+    border: solid 1px #ffdd2d;
+}
+.balance{
+    background: #545355;
+    position: relative;
+    padding: 5px 10px ;
+}
+.sum {
+   position: absolute;
+    right: 10px;
+}
+.stockList{
+    background: #ffdd2d;
+    min-height: 300px;
+}
