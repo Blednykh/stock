@@ -1,0 +1,15 @@
+.table{
+    height: 50px;
+    background: #487eb0;
+}
+.header{
+    color: white;
+    padding: 5px 10px ;
+}
+.content{
+}
+.loader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}

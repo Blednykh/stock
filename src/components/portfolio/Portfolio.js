@@ -4,91 +4,79 @@ import './Portfolio.css';
 import PortfolioItem from '../portfolioItem/PortfolioItem';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {addBalanceInfo} from "../../actions/index";
+import {addAccountInfo} from "../../actions/index";
+import history from "../../history/history";
 
 class Portfolio extends React.Component {
     constructor(props){
         super(props);
         this.state ={
         };
+    }
+    componentWillMount = () => {
+        if(this.props.userInfo.accessToken!==undefined){
+         /*   this.props.addAccountInfo(this.props.userInfo.accessToken);*/
+        }
+        else history.push('/signin');
 
-        this.componentWillMount = this.componentWillMount.bind(this);
 
     }
-    componentWillMount() {
-        let request = new XMLHttpRequest();
 
-        request.open('GET', 'https://warm-citadel-97897.herokuapp.com/api/account/info', true);
-        request.setRequestHeader('Content-Type', 'application/json');
-        /*request.addEventListener('load', function() {
-            console.log("ответ сервера");
-            console.log(request.responseText);
-        });*/
-        request.onload = ()=>{
-            /* recordData = JSON.parse(request.responseText);*/
-            console.log("ответ сервера");
-            console.log(request.responseText);
-            this.props.addBalanceInfo(request.responseText);
-        };
-        request.onerror = ()=>{
-            const stocksList= {
-                balance: 2000,
-                stocks: [
-                    {
-                        id: 0,
-                        code: "TCS",
-                        name: "TCS Group (Tinkoff)",
-                        iconUrl: "string",
-                        price: 123,
-                        priceDelta: 0.3,
-                        count: 10
-                    },
-                    {
-                        id: 1,
-                        code: "BBK",
-                        name: "BBK Group",
-                        iconUrl: "string",
-                        price: 230,
-                        priceDelta: 0.6,
-                        count: 24
-                    },
-                    {
-                        id: 2,
-                        code: "BLABLA",
-                        name: "BLABLA Group",
-                        iconUrl: "string",
-                        price: 2300,
-                        priceDelta: 0.8,
-                        count: 12
-                    }
-                ]
-            };
-            /* recordData = JSON.parse(request.responseText);*/
-            console.log("СЕРВЕР НИЧЕГО НЕ ВЕРНУЛ");
-            this.props.addBalanceInfo(stocksList);
-        };
-        request.send();
+    componentDidMount = () => {
+        const accInfoElem = document.getElementById('accInfo');
+        const portfolioElem = document.getElementById('portfolio');
+
+        accInfoElem.onmousedown = function(e) {
+            const offsetX = e.offsetX;
+            const offsetY = e.offsetY;
+
+            portfolioElem.style.position = 'absolute';
+            moveAt(e);
+
+            document.body.appendChild(portfolioElem);
+
+            portfolioElem.style.zIndex = 1000;
+
+            function moveAt(e) {
+                portfolioElem.style.left = '100px';
+                portfolioElem.style.left = e.pageX - offsetX + 'px';
+                portfolioElem.style.top = e.pageY - offsetY + 'px';
+            }
+
+            document.onmousemove = function(e) {
+                moveAt(e);
+            }
+
+            accInfoElem.onmouseup = function() {
+                document.onmousemove = null;
+                accInfoElem.onmouseup = null;
+            }
+        }
     }
 
+    setPortfolioItemsList = () => {
+        if(this.props.userInfo.stocks!==undefined){
+            return this.props.userInfo.stocks.map((item,index)=>
+                <PortfolioItem
+                    index = {index}
+                    key = {index}
+                    type = "portfolio"
+                />
+            );
+        }
+    }
 
     render() {
-      /*  const stocksList = this.props.userInfo.stocks;*/
-
-
         return (
             <div className="portfolio" id='portfolio'>
-                <div className="accInfo" id='accInfo'>TAKOITOTO
+                <div className="accInfo" id='accInfo'>{/*{this.props.userInfo.name}*/} Мои акции
                 </div>
-                <div className="stockList">
-                    {this.props.userInfo.stocks.map((item)=>
-                        <PortfolioItem
-                            id = {item.id}
-                        />
-                    )}
+                <div className="stocksList">
+                    {this.setPortfolioItemsList()}
                 </div>
                 <div className="balance">
                     <span>Balance:</span>
-                    <span className="sum">1000$</span>
+                    <span className="sum">{this.props.userInfo.balance&&this.props.userInfo.balance.toFixed(4)} $</span>
                 </div>
             </div>
         )
@@ -101,8 +89,7 @@ function mapStateToProps(state) {
     };
 }
 function matchDispatchToProps (dispatch){
-    return bindActionCreators({addBalanceInfo}, dispatch)
+    return bindActionCreators({addAccountInfo}, dispatch)
 
 }
-
 export default connect(mapStateToProps, matchDispatchToProps)(Portfolio);

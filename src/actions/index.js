@@ -24,10 +24,10 @@ export const addToken = (data) => {
         payload: data
     }
 };
-export const addBalanceInfo = (data) => {
+export const addAccountInfo = (accessToken) => {
     return{
-        type: 'ADD_BALANCE_INFO',
-        payload: data
+        type: 'ADD_ACCOUNT_INFO',
+        payload: accessToken
     }
 };
 export const signin = (data) => {
@@ -39,6 +39,43 @@ export const signin = (data) => {
 export const signup = (data) => {
     return{
         type: 'SIGNUP',
+        payload: data
+    }
+};
+export const refresh = (data) => {
+    return{
+        type: 'REFRESH',
+        payload: data
+    }
+};
+export const addStocks = (data) => {
+    console.log(data);
+    return{
+        type: 'ADD_STOCKS',
+        payload: data
+    }
+};
+export const buy = (data) => {
+    return{
+        type: 'BUY',
+        payload: data
+    }
+};
+export const sell = (data) => {
+    return{
+        type: 'SELL',
+        payload: data
+    }
+};
+export const transactionHistoty = (data) => {
+    return{
+        type: 'TRANSACTION_HISTORY',
+        payload: data
+    }
+};
+export const addShowedStocksInfoList = (data) => {
+    return{
+        type: 'ADD_SHOWED_STOCKS',
         payload: data
     }
 };

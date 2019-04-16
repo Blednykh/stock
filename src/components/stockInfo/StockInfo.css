@@ -1,0 +1,53 @@
+.stockInf{
+    width: 300px;
+    height: 300px;
+    text-align: left;
+    overflow: hidden;
+    box-shadow: 5px 5px 5px #000000b3;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}
+.name{
+    width: 100%;
+    background: #545355;
+    padding: 5px 10px;
+    position: relative;
+    color: white;
+    height: 8.2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.balance{
+    background: #545355;
+    position: relative;
+    padding: 5px 10px ;
+    color: white;
+    height: 10%;
+}
+.info{
+    background: #ffdd2d;
+    min-height: 50px;
+    height: 40%;
+    width: 100%;
+}
+.graph{
+    background: #4a8ec1;
+    height: 35%;
+}
+.closeButton{
+    background: #545355;
+    margin-right: 20px;
+    color: white;
+    align-self: center;
+    font-weight: normal;
+
+}
+.fa-times{
+    transition: 0.3s;
+}
+.closeButton:hover .fa-times{
+    color: #ffdd2d;
+}

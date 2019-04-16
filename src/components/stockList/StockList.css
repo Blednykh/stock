@@ -1,0 +1,83 @@
+.stockList{
+    width: 300px;
+    height: 500px;
+    text-align: left;
+    overflow: hidden;
+    box-shadow: 5px 5px 5px #000000b3;
+}
+.head{
+    width: 100%;
+    background: #545355;
+    padding: 5px 10px ;
+    position: relative;
+    color: white;
+    height: 5%;
+}
+.navigation{
+    background: #545355;
+    position: relative;
+    padding: 5px 10px ;
+    color: white;
+    height: 20%;
+    text-align: center;
+}
+
+.stockListList{
+    background: #ffdd2d;
+    min-height: 200px;
+    overflow: auto;
+    height: 75%;
+}
+.search-box{
+    background: white;
+    height: 8%;
+    width: 100%;
+}
+.search-box input{
+    height: 100%;
+    width: 80%;
+    padding: 0px 10px;
+    /*border-radius: 40px;*/
+    border: 0px;
+    /*margin: 5px 3px;*/
+}
+.searchButton{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    border: 0px;
+    margin-left: -40px;
+    color: #545355;
+    background: white;
+    transition: 0.5s;
+}
+.searchButton:hover {
+    background: #f1f1f1;
+}
+.countButton{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    color: #545355;
+    background: white;
+    transition: 0.5s;
+    margin-left: 5px;
+    border: 2px solid #f1f1f1;
+}
+.countButton:hover {
+    background: #f1f1f1;
+}
+.navigation button{
+    border-radius: 100px;
+    border-width: 0px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background: white;
+}
+.navigation button:hover{
+    border-radius: 100px;
+    border-width: 0px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background: #e6e6e6
+}

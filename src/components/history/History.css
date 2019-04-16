@@ -1,22 +1,17 @@
-.portfolio{
+.history{
     width: 300px;
     height: 500px;
     text-align: left;
     overflow: hidden;
     box-shadow: 5px 5px 5px #000000b3;
 }
-.accInfo{
+.head{
     width: 100%;
     background: #545355;
     padding: 5px 10px ;
     position: relative;
     color: white;
     height: 5%;
-}
-#DaD{
-    position: absolute;
-    right: 30px;
-    border: solid 1px black;
 }
 .balance{
     background: #545355;
@@ -25,14 +20,9 @@
     color: white;
     height: 10%;
 }
-.sum {
-   position: absolute;
-    right: 10px;
-}
 .stocksList{
     background: #ffdd2d;
     min-height: 300px;
     overflow: auto;
     height: 86%;
 }
-
