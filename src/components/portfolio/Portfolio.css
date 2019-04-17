@@ -4,6 +4,7 @@
     text-align: left;
     overflow: hidden;
     box-shadow: 5px 5px 5px #000000b3;
+    position: absolute;
 }
 .accInfo{
     width: 100%;

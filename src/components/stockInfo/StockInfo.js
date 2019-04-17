@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './StockInfo.css';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {addAccountInfo, addShowedStocksInfoList, sell , buy} from "../../actions/index";
+import {stockHistory, sell , buy} from "../../actions/index";
 import history from "../../history/history";
+import { Chart } from "react-google-charts";
 
 class StockInfo extends React.Component {
     constructor(props){
@@ -16,15 +17,17 @@ class StockInfo extends React.Component {
             offsetY: 0,
             pageX: 0,
             pageY: 0,
-            amount: 0
+            amount: 0,
+            positionLeft: "1010px",
+            positionTop: "90px",
+            range: ""
         };
     }
     componentWillMount = () => {
         if(this.props.userInfo.accessToken!==undefined){
-            /*   this.props.addAccountInfo(this.props.userInfo.accessToken);*/
+            this.props.stockHistory({id: this.props.userInfo.items[this.props.index].id, range: this.state.range, accessToken: this.props.userInfo.accessToken})
         }
         else history.push('/signin');
-
 
     };
 
@@ -116,11 +119,27 @@ class StockInfo extends React.Component {
         this.setState({amount: event.target.value});
     };
 
+
+
     render() {
+        const options = {
+            hAxis: { title: "Date", viewWindow: { min: 12, max: 28 } },
+            vAxis: { title: "Price", viewWindow: { min: 0, max: 500 } },
+            legend: "none"
+        };
+        const data = [
+            ["Date", "Price"],
+            [12, 120],
+            [15, 300],
+            [17, 400],
+            [20, 300],
+            [24, 350],
+            [28, 500]
+        ];
         const name = (this.props.userInfo.items[this.props.index].name===undefined)?"Имя акции":this.props.userInfo.items[this.props.index].name;
         const id = 'stockInf'+this.props.id;
         return (
-            <div className="stockInf" id={id} style = {{display: this.state.display}}>
+            <div className="stockInf" id={id} style = {{display: this.state.display, left: this.state.positionLeft, top: this.state.positionTop}}>
                 <div className="name" onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp} onMouseMove={this.onMouseMove}>{name}
                     <div className="closeButton" onClick={ this.props.stockClick(this.props.id)}>
                         <i className="fas fa-times"></i>
@@ -130,7 +149,15 @@ class StockInfo extends React.Component {
                     <div className="price">Price: {this.props.userInfo.items[this.props.index].price} $</div>
 
                 </div>
-                <div className="graph">
+                <div className="chart_div">
+                    <Chart
+                        chartType="AreaChart"
+                        data={data}
+                        options={options}
+                        width="100%"
+                        height="100%"
+                        legendToggle
+                    />
                 </div>
                 <div className="balance">
                     <button onClick={this.sellClick}>Sell</button>
@@ -148,6 +175,6 @@ function mapStateToProps(state) {
     };
 }
 function matchDispatchToProps (dispatch){
-    return bindActionCreators({addShowedStocksInfoList, sell, buy}, dispatch)
+    return bindActionCreators({stockHistory, sell, buy}, dispatch)
 }
 export default connect(mapStateToProps, matchDispatchToProps)(StockInfo);

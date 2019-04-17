@@ -27,12 +27,11 @@
 }
 
 .txtb{
-    margin: 20px 0;
     background: rgba(255,255,255,.5);
     border-radius: 6px;
 }
 .signin-btn{
-    margin-top: 60px;
+    margin-top: 40px;
     margin-bottom: 20px;
     background: #ffdd2d;
     border-radius: 44px;
@@ -54,4 +53,16 @@
 }
 .signin-form a:hover{
     background: rgba(0,0,0,.3);
+}
+.errorText{
+    color: #ffdd2d;
+    font-weight: bold;
+    font-size: 13px;
+    display: none;
+}
+.signin-loader{
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    display: none;
 }

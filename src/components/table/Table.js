@@ -11,6 +11,8 @@ import {addAccountInfo, addShowedStocksInfoList} from "../../actions/index";
 import history from "../../history/history";
 import Loader from 'react-loader-spinner'
 import PortfolioItem from "../portfolioItem/PortfolioItem";
+import userIco from '../../user.png';
+
 
 class Table extends React.Component {
     constructor(props){
@@ -35,14 +37,7 @@ class Table extends React.Component {
         }
     };
 
-    stockClick = (index) =>(e) => {
-        /*console.log(index);
-        let showedStocksList = [];
-        if(this.props.userInfo.showedStocksList!==undefined)
-            showedStocksList = this.props.userInfo.showedStocksList;
-        if(showedStocksList.length>0) showedStocksList.splice(index,1);
-        else showedStocksList = [];
-        this.props.addShowedStocksInfoList(showedStocksList);*/
+    stockClick = (index) =>() => {
         let showedStocksList = [];
         if(this.props.userInfo.showedStocksList!==undefined)
             showedStocksList = this.props.userInfo.showedStocksList;
@@ -55,7 +50,15 @@ class Table extends React.Component {
         console.log(this.props.userInfo);
         return (
             <div className="table">
-                <div className="header" >{this.props.userInfo.name}
+                <div className="header" >
+                    <div className="menu">
+                       {/* <span>History</span>
+                        <span>Stocks</span>*/}
+                        <span className="user">
+                         {/*   <img src={userIco}/>*/}
+                            {this.props.userInfo.name}
+                        </span>
+                    </div>
                 </div>
                 <div className="content">
                   <Portfolio/>

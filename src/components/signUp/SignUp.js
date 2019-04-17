@@ -4,6 +4,7 @@ import {BrowserRouter as Router,Route, Link, Redirect } from "react-router-dom";
 import SignIn from '../signIn/SignIn';
 import {connect} from "react-redux";
 import {signup} from "../../actions/index";
+import Loader from "react-loader-spinner";
 
 class SignUp extends React.Component{
     constructor(props) {
@@ -22,18 +23,27 @@ class SignUp extends React.Component{
     onPasswordChange = event => this.setState({password: event.target.value});
 
     render() {
-       /* if(this.props.userInfo.accessToken!==undefined)
-            return <Redirect push to="/" />;*/
+        let displayForm = (this.props.userInfo.accountInfoLoading === "inherit")? "none": "inherit";
         return (
-            <div className="signup-form">
-                <div className="form">
-                    <h1>Sign Up</h1>
-                    <input type="text" placeholder="Full Name" className="txtb" onChange={this.onUserNameChange}/>
-                  {/*  <input type="email" placeholder="Email" className="txtb" onChange={this.onEmailChange}/>*/}
-                    <input type="password" placeholder="Password" className="txtb" onChange={this.onPasswordChange}/>
-                    <input type="submit" value="Create Account" className="signup-btn" onClick={this.handleSubmit}/>
-                    <Link to="/SignIn">Sign In?</Link>
-                    <Route path="/SignIn" component={SignIn} />
+            <div>
+                <div className="signup-form" style={{display: displayForm}}>
+                    <div className="form">
+                        <h1>Sign Up</h1>
+                        <input type="text" placeholder="Full Name" className="txtb" onChange={this.onUserNameChange}/>
+                        {/*  <input type="email" placeholder="Email" className="txtb" onChange={this.onEmailChange}/>*/}
+                        <input type="password" placeholder="Password" className="txtb" onChange={this.onPasswordChange}/>
+                        <input type="submit" value="Create Account" className="signup-btn" onClick={this.handleSubmit}/>
+                        <Link to="/SignIn">Sign In?</Link>
+                        <Route path="/SignIn" component={SignIn} />
+                    </div>
+                </div>
+                <div className="loader" style={{display: this.props.userInfo.accountInfoLoading}}>
+                    <Loader
+                        type="Grid"
+                        color="#487eb0"
+                        height="100"
+                        width="100"
+                    />
                 </div>
             </div>
         )

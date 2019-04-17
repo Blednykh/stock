@@ -7,11 +7,6 @@ export default function signin(data) {
          body:  JSON.stringify(data)
      })
          .then(r =>{
-             // if (r.status !== 200) {
-             //     console.log('Looks like there was a problem. Status Code: ' +
-             //         r.status);
-             //     return;
-             // }
              return r.json();
          });
 }

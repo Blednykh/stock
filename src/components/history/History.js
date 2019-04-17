@@ -12,7 +12,9 @@ class History extends React.Component {
         super(props);
         this.state ={
             stocksQuantity: 10,
-            search: ''
+            search: '',
+            positionLeft: "680px",
+            positionTop: "90px"
         };
     }
     componentWillMount = () => {
@@ -75,7 +77,7 @@ class History extends React.Component {
 
     render() {
         return (
-            <div className="history" id='history'>
+            <div className="history" id='history' style = {{display: this.state.display, left: this.state.positionLeft, top: this.state.positionTop}}>
                 <div className="head" id='head'>История транзакций</div>
                 <div className = "search-box">
                     <input type="text" placeholder="Search by stock..." onChange={this.searchChange}/>

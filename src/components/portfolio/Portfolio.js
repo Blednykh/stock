@@ -11,6 +11,8 @@ class Portfolio extends React.Component {
     constructor(props){
         super(props);
         this.state ={
+            positionLeft: "20px",
+            positionTop: "90px"
         };
     }
     componentWillMount = () => {
@@ -68,7 +70,7 @@ class Portfolio extends React.Component {
 
     render() {
         return (
-            <div className="portfolio" id='portfolio'>
+            <div className="portfolio" id='portfolio' style={{left: this.state.positionLeft, top: this.state.positionTop}}>
                 <div className="accInfo" id='accInfo'>{/*{this.props.userInfo.name}*/} Мои акции
                 </div>
                 <div className="stocksList">

@@ -5,8 +5,6 @@
     overflow: hidden;
     box-shadow: 5px 5px 5px #000000b3;
     position: absolute;
-    top: 50px;
-    left: 50px;
 }
 .name{
     width: 100%;
@@ -30,12 +28,12 @@
 .info{
     background: #ffdd2d;
     min-height: 50px;
-    height: 40%;
+    height: 30%;
     width: 100%;
 }
-.graph{
+.chart_div{
     background: #4a8ec1;
-    height: 35%;
+    height: 45%;
 }
 .closeButton{
     background: #545355;

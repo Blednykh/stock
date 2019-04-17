@@ -12,7 +12,9 @@ class StockList extends React.Component {
         super(props);
         this.state ={
             stocksQuantity: 10,
-            search: ''
+            search: '',
+            positionLeft: "350px",
+            positionTop: "90px"
         };
     }
     componentWillMount = () => {
@@ -75,7 +77,7 @@ class StockList extends React.Component {
 
     render() {
         return (
-            <div className="stockList" id='stockList'>
+            <div className="stockList" id='stockList' style = {{display: this.state.display, left: this.state.positionLeft, top: this.state.positionTop}}>
                 <div className="head" id='stockListHead'>Список акций</div>
                 <div className = "search-box">
                     <input type="text" placeholder="Search stocks..." onChange={this.searchChange}/>
