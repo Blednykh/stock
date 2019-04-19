@@ -54,7 +54,7 @@ class Table extends React.Component {
     };
 
     render() {
-        console.log(this.props.userInfo);
+  /*      console.log(this.props.userInfo);*/
         return (
             <div className="table">
                 <div className="header" >

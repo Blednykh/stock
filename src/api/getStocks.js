@@ -12,7 +12,6 @@ export default function getStocks(data) {
                     r.status);
                 return;
             }
-            console.log(r.status);
             return r.json();
         });
 }

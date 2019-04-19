@@ -33,8 +33,7 @@ class Draggable extends React.Component {
             else return 0;
         })
         this.props.setComponentsPosition(position);
-
-        console.log(position);
+        
     };
     onMouseMove = (e) => {
         const documentElem = this.transporter;

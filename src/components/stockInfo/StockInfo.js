@@ -103,7 +103,6 @@ class StockInfo extends React.Component {
 
 
     render() {
-        console.log("id="+this.props.id);
         const options = this.setChartOption();
         const data = this.setChartData();
         return (

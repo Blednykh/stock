@@ -1,5 +1,4 @@
 export default function accountInfo(accessToken) {
-    console.log(accessToken);
     return fetch(
         'https://warm-citadel-97897.herokuapp.com/api/account/info',
         {
@@ -12,7 +11,6 @@ export default function accountInfo(accessToken) {
                     r.status);
                 return;
             }
-            console.log(r.status);
             return r.json();
         });
 }
