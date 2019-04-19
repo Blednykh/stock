@@ -1,39 +1,32 @@
 .portfolio{
     width: 300px;
-    height: 500px;
     text-align: left;
     overflow: hidden;
-    box-shadow: 5px 5px 5px #000000b3;
-    position: absolute;
-}
-.accInfo{
-    width: 100%;
-    background: #545355;
-    padding: 5px 10px ;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
     position: relative;
-    color: white;
-    height: 5%;
+    box-sizing: content-box;
 }
-#DaD{
-    position: absolute;
-    right: 30px;
-    border: solid 1px black;
-}
-.balance{
+.portfolio .footer{
     background: #545355;
-    position: relative;
+    width: 300px;
+    position: absolute;
+    bottom: 0px;
     padding: 5px 10px ;
     color: white;
-    height: 10%;
+    height: 25px;
+    box-sizing: content-box;
 }
 .sum {
    position: absolute;
-    right: 10px;
+    right: 30px;
 }
-.stocksList{
-    background: #ffdd2d;
+.portfolio  .stocksList{
+    background: #f4f4f4;
     min-height: 300px;
     overflow: auto;
-    height: 86%;
+    height: 400px;
+    margin-bottom: 25px;
 }
 

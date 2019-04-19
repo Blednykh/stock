@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './StockInfo.css';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -10,146 +9,118 @@ import { Chart } from "react-google-charts";
 class StockInfo extends React.Component {
     constructor(props){
         super(props);
-        this.state ={
-            display: "inherit",
-            down: false,
-            offsetX: 0,
-            offsetY: 0,
-            pageX: 0,
-            pageY: 0,
+        this.state = {
             amount: 0,
-            positionLeft: "1010px",
-            positionTop: "90px",
-            range: ""
+            stock: {
+                price: 0
+            }
         };
     }
     componentWillMount = () => {
         if(this.props.userInfo.accessToken!==undefined){
-            this.props.stockHistory({id: this.props.userInfo.items[this.props.index].id, range: this.state.range, accessToken: this.props.userInfo.accessToken})
+            this.props.stockHistory({
+                id: this.props.id,
+                range: "week",
+                accessToken: this.props.userInfo.accessToken,
+                refreshToken: this.props.userInfo.refreshToken
+            })
         }
         else history.push('/signin');
 
-    };
-
-    onMouseUp = (e) => {
-        this.setState({down: false/*,offsetX: 0,offsetY: 0*/});
-        const id = 'stockInf'+this.props.id;
-        const documentElem = document.getElementById(id);
-        documentElem.style.zIndex = '999';
-        /*document.body.removeChild(documentElem);*/
-    };
-    onMouseMove = (e) => {
-        const documentElem = document.getElementById('stockInf'+this.props.id);
-        const {down, offsetX, offsetY, pageX, pageY} = this.state;
-        if(down){
-            documentElem.style.left = offsetX + (e.pageX - pageX) + 'px';
-            documentElem.style.top = offsetY + (e.pageY - pageY) + 'px';
+        let inItems = false;
+        this.props.userInfo.items.forEach((item,index)=>{
+            if(item.id===this.props.id){
+                inItems = true;
+                this.setState({stock: item});
+            }
+        });
+        if(!inItems){
+            this.props.userInfo.stocks.forEach((item,index)=>{
+                if(item.id===this.props.id){
+                    this.setState({stock: item});
+                }
+            });
         }
+
     };
-    onMouseDown = (e) => {
-        const id = 'stockInf'+this.props.id;
-        const documentElem = document.getElementById(id);
-        documentElem.style.zIndex = '1000';
-        /*document.body.appendChild(documentElem);*/
-        console.log(documentElem.style.zIndex);
-        const offsetX = documentElem.offsetLeft;
-        const offsetY = documentElem.offsetTop;
 
-        this.setState({down: true, offsetX, offsetY, pageX: e.pageX, pageY: e.pageY});
-    }
-
-
-    componentDidMount = () => {
-        //this.setState({accInfoElem: document.getElementById('info'), portfolioElem: document.getElementById('stockInf')});
-     /*   const {accInfoElem, portfolioElem}  = this.state;*/
-
-
-       /* this.state.accInfoElem.onmousedown = function(e) {
-            const offsetX = e.offsetX;
-            const offsetY = e.offsetY;
-
-            portfolioElem.style.position = 'absolute';
-            moveAt(e);
-
-            document.body.appendChild(portfolioElem);
-
-            portfolioElem.style.zIndex = 1000;
-
-            function moveAt(e) {
-                portfolioElem.style.left = '100px';
-                portfolioElem.style.left = e.pageX - offsetX + 'px';
-                portfolioElem.style.top = e.pageY - offsetY + 'px';
-            }
-
-            document.onmousemove = function(e) {
-                moveAt(e);
-            }
-
-            accInfoElem.onmouseup = function() {
-                document.onmousemove = null;
-                accInfoElem.onmouseup = null;
-
-            }
-        }*/
-    }
-   /* stockClick = () => {
-        let showedStocksList = [];
-        if(this.props.userInfo.showedStocksList!==undefined)
-            showedStocksList = this.props.userInfo.showedStocksList;
-        if(showedStocksList.length>0) showedStocksList.splice(this.props.key,1);
-        else showedStocksList = [];
-        this.props.addShowedStocksInfoList(showedStocksList);
-        /!*this.setState({display: "none"});*!/
-    };*/
 
     sellClick = () => {
-        this.props.sell({   stockId: this.props.userInfo.items[this.props.index].id,
-                             amount: this.state.amount,
-                        accessToken: this.props.userInfo.accessToken
+        this.props.sell({
+            stockId: this.props.id,
+            amount: this.state.amount,
+            accessToken: this.props.userInfo.accessToken,
+            refreshToken: this.props.userInfo.refreshToken
         });
     };
 
     buyClick = () => {
-        this.props.buy({   stockId: this.props.userInfo.items[this.props.index].id,
-                            amount: this.state.amount,
-                       accessToken: this.props.userInfo.accessToken
+        this.props.buy({
+            stockId: this.props.id,
+            amount: this.state.amount,
+            accessToken: this.props.userInfo.accessToken,
+            refreshToken: this.props.userInfo.refreshToken
         });
     };
-    amountChange = (event) => {
-        this.setState({amount: event.target.value});
+    amountChange = (e) => {
+        this.setState({amount: e.target.value});
     };
 
+    selectChange = (e) => {
+        this.props.stockHistory({
+            id: this.props.id,
+            range: e.target.value,
+            accessToken: this.props.userInfo.accessToken,
+            refreshToken: this.props.userInfo.refreshToken
+        })
+    };
+
+    setChartOption = () => {
+        if(this.props.userInfo.stockHistory!==undefined){
+            const dateMin = this.props.userInfo.stockHistory.history[0].date;
+            const dateMax = this.props.userInfo.stockHistory.history[this.props.userInfo.stockHistory.history.length-1].date;
+            const priceMin = this.props.userInfo.stockHistory.history[0].price;
+            const priceMax = this.props.userInfo.stockHistory.history[this.props.userInfo.stockHistory.history.length-1].price;
+            return {
+                hAxis: { format: "MMM d, y", title: "Date", viewWindow: { min: dateMin, max: dateMax } },
+                vAxis: { title: "Price", viewWindow: { min: priceMin, max: priceMax } },
+                legend: "none"
+            }
+        }
+    }
+
+    setChartData = () => {
+        if(this.props.userInfo.stockHistory!==undefined){
+            const Data = [["Date", "Price"]];
+            this.props.userInfo.stockHistory.history.forEach((item)=>{
+                let date = new Date(item.date);
+                Data.push([date,item.price])
+            });
+
+            return Data;
+        }
+    }
 
 
     render() {
-        const options = {
-            hAxis: { title: "Date", viewWindow: { min: 12, max: 28 } },
-            vAxis: { title: "Price", viewWindow: { min: 0, max: 500 } },
-            legend: "none"
-        };
-        const data = [
-            ["Date", "Price"],
-            [12, 120],
-            [15, 300],
-            [17, 400],
-            [20, 300],
-            [24, 350],
-            [28, 500]
-        ];
-        const name = (this.props.userInfo.items[this.props.index].name===undefined)?"Имя акции":this.props.userInfo.items[this.props.index].name;
-        const id = 'stockInf'+this.props.id;
+        console.log("id="+this.props.id);
+        const options = this.setChartOption();
+        const data = this.setChartData();
         return (
-            <div className="stockInf" id={id} style = {{display: this.state.display, left: this.state.positionLeft, top: this.state.positionTop}}>
-                <div className="name" onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp} onMouseMove={this.onMouseMove}>{name}
-                    <div className="closeButton" onClick={ this.props.stockClick(this.props.id)}>
-                        <i className="fas fa-times"></i>
-                    </div>
-                </div>
+            <div className="stockInf">
                 <div className="info">
-                    <div className="price">Price: {this.props.userInfo.items[this.props.index].price} $</div>
-
+                    <div className="stockInfoName">{this.state.stock.name}</div>
+                    <div className="stockInfoPrice">{this.state.stock.price.toFixed(2)}$</div>
                 </div>
                 <div className="chart_div">
+                    <select onChange={this.selectChange} defaultValue="week">
+                        <option>day</option>
+                        <option>week</option>
+                        <option>month</option>
+                        <option>6 months</option>
+                        <option>year</option>
+                        <option>total</option>
+                    </select>
                     <Chart
                         chartType="AreaChart"
                         data={data}
@@ -159,7 +130,7 @@ class StockInfo extends React.Component {
                         legendToggle
                     />
                 </div>
-                <div className="balance">
+                <div className="footer1">
                     <button onClick={this.sellClick}>Sell</button>
                     <input className="amount" placeholder="Amount stocks..." onChange={this.amountChange}/>
                     <button onClick={this.buyClick}>Buy</button>

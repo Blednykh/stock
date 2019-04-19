@@ -1,11 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './StockList.css';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {addStocks} from "../../actions/index";
 import history from "../../history/history";
-import PortfolioItem from '../portfolioItem/PortfolioItem';
+import PortfolioItem from '../listItem/ListItem';
 
 class StockList extends React.Component {
     constructor(props){
@@ -13,51 +12,20 @@ class StockList extends React.Component {
         this.state ={
             stocksQuantity: 10,
             search: '',
-            positionLeft: "350px",
-            positionTop: "90px"
+            itemId: 0
         };
     }
     componentWillMount = () => {
         if(this.props.userInfo.accessToken === undefined) history.push('/signin');
     };
 
-    componentDidMount = () => {
-        const accInfoElem = document.getElementById('stockListHead');
-        const portfolioElem = document.getElementById('stockList');
-
-        accInfoElem.onmousedown = function(e) {
-            const offsetX = e.offsetX;
-            const offsetY = e.offsetY;
-
-            portfolioElem.style.position = 'absolute';
-            moveAt(e);
-
-            document.body.appendChild(portfolioElem);
-
-            portfolioElem.style.zIndex = 1000;
-
-            function moveAt(e) {
-                portfolioElem.style.left = '100px';
-                portfolioElem.style.left = e.pageX - offsetX + 'px';
-                portfolioElem.style.top = e.pageY - offsetY + 'px';
-            }
-
-            document.onmousemove = function(e) {
-                moveAt(e);
-            };
-
-            accInfoElem.onmouseup = function() {
-                document.onmousemove = null;
-                accInfoElem.onmouseup = null;
-            }
-        }
-    };
 
     setStockList = () => {
         if(this.props.userInfo.stocks!==undefined){
             return this.props.userInfo.items.map((item,index)=>
                 <PortfolioItem
                     index = {index}
+                    id = {item.id}
                     key = {index}
                     type = 'stocks-list'
                 />
@@ -73,12 +41,24 @@ class StockList extends React.Component {
     searchChange = (event) => {
         this.setState({search: event.target.value});
     };
-    searchClick = () => this.props.addStocks({...this.state, accessToken: this.props.userInfo.accessToken});
+    searchClick = () => this.props.addStocks({...this.state, accessToken: this.props.userInfo.accessToken, refreshToken: this.props.userInfo.refreshToken});
+
+    prefClick = () => {
+        let itemId = this.state.itemId;
+        if(itemId!==0)itemId-= this.state.stocksQuantity;
+        this.setState({itemId});
+        this.props.addStocks({...this.state, accessToken: this.props.userInfo.accessToken, refreshToken: this.props.userInfo.refreshToken});
+    }
+
+    nextClick = () => {
+        const itemId = this.state.itemId + this.state.stocksQuantity;
+        this.setState({itemId});
+        this.props.addStocks({...this.state, accessToken: this.props.userInfo.accessToken, refreshToken: this.props.userInfo.refreshToken});
+    }
 
     render() {
         return (
-            <div className="stockList" id='stockList' style = {{display: this.state.display, left: this.state.positionLeft, top: this.state.positionTop}}>
-                <div className="head" id='stockListHead'>Список акций</div>
+            <div className="stockList">
                 <div className = "search-box">
                     <input type="text" placeholder="Search stocks..." onChange={this.searchChange}/>
                     <button className="searchButton" onClick={this.searchClick}>
@@ -87,14 +67,13 @@ class StockList extends React.Component {
                     <button className="countButton" title = "Кол-во акций на странице" onClick={this.quantityChange}>
                        {this.state.stocksQuantity}
                     </button>
-                  {/*  <input/><span>на странице</span>*/}
                 </div>
                 <div className="stockListList">
                     {this.setStockList()}
                 </div>
                 <div className="navigation">
-                    <button className="buttonPref">Pref</button>
-                    <button className="buttonNext">Next</button>
+                    <button className="buttonPref" onClick={this.prefClick}>Pref</button>
+                    <button className="buttonNext" onClick={this.nextClick}>Next</button>
                 </div>
             </div>
         )

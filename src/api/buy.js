@@ -1,7 +1,7 @@
 export default function buy(data) {
-    console.log(data);
+    data.stockId = 4;
     return fetch(
-        'https://stocks-mocks.herokuapp.com/api/transaction/buy',
+        'https://warm-citadel-97897.herokuapp.com/api/transaction/buy',
         {
             method: 'POST',
             headers: new Headers({ 'Content-Type':  'application/json',

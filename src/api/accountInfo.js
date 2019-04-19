@@ -1,7 +1,7 @@
 export default function accountInfo(accessToken) {
     console.log(accessToken);
     return fetch(
-        'https://stocks-mocks.herokuapp.com/api/account/info',
+        'https://warm-citadel-97897.herokuapp.com/api/account/info',
         {
             method: 'GET',
             headers: new Headers({'Authorization': accessToken}),

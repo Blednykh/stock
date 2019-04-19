@@ -1,46 +1,44 @@
 .stockList{
     width: 300px;
-    height: 500px;
     text-align: left;
     overflow: hidden;
-    box-shadow: 5px 5px 5px #000000b3;
-    position: absolute;
-}
-.head{
-    width: 100%;
-    background: #545355;
-    padding: 5px 10px ;
     position: relative;
-    color: white;
-    height: 5%;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+    box-sizing: content-box;
 }
+
 .navigation{
     background: #545355;
-    position: relative;
+    position: absolute;
+    bottom: 0px;
+    width: 300px;
     padding: 5px 10px ;
     color: white;
-    height: 20%;
+    height: 30px;
     text-align: center;
+    box-sizing: content-box;
 }
 
 .stockListList{
-    background: #ffdd2d;
-    min-height: 200px;
+    background: #f4f4f4;
+    min-height: 300px;
     overflow: auto;
-    height: 75%;
+    height: auto;
+    max-height: 600px;
+    margin-bottom: 40px;
 }
 .search-box{
     background: white;
-    height: 8%;
+    height: 45px;
     width: 100%;
 }
 .search-box input{
     height: 100%;
     width: 80%;
     padding: 0px 10px;
-    /*border-radius: 40px;*/
     border: 0px;
-    /*margin: 5px 3px;*/
 }
 .searchButton{
     height: 35px;
@@ -74,6 +72,7 @@
     padding: 5px 10px;
     margin-right: 10px;
     background: white;
+    width: 100px;
 }
 .navigation button:hover{
     border-radius: 100px;
@@ -82,3 +81,4 @@
     margin-right: 10px;
     background: #e6e6e6
 }
+

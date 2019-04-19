@@ -1,10 +1,11 @@
 import React from 'react';
-import './SignUp.css'
 import {BrowserRouter as Router,Route, Link, Redirect } from "react-router-dom";
-import SignIn from '../signIn/SignIn';
 import {connect} from "react-redux";
 import {signup} from "../../actions/index";
 import Loader from "react-loader-spinner";
+import SignIn from '../signIn/SignIn';
+import './SignUp.css'
+
 
 class SignUp extends React.Component{
     constructor(props) {
@@ -19,10 +20,10 @@ class SignUp extends React.Component{
 
     handleSubmit = () => this.props.signup(this.state);
     onUserNameChange = event => this.setState({login: event.target.value});
-    /*onEmailChange = event => this.setState({email: event.target.value});*/
     onPasswordChange = event => this.setState({password: event.target.value});
 
     render() {
+
         let displayForm = (this.props.userInfo.accountInfoLoading === "inherit")? "none": "inherit";
         return (
             <div>
@@ -30,7 +31,6 @@ class SignUp extends React.Component{
                     <div className="form">
                         <h1>Sign Up</h1>
                         <input type="text" placeholder="Full Name" className="txtb" onChange={this.onUserNameChange}/>
-                        {/*  <input type="email" placeholder="Email" className="txtb" onChange={this.onEmailChange}/>*/}
                         <input type="password" placeholder="Password" className="txtb" onChange={this.onPasswordChange}/>
                         <input type="submit" value="Create Account" className="signup-btn" onClick={this.handleSubmit}/>
                         <Link to="/SignIn">Sign In?</Link>
@@ -52,7 +52,9 @@ class SignUp extends React.Component{
 }
 
 export default connect(
-    null,
+    (state) => ({
+        userInfo: state.userInfo
+    }),
     (dispatch) => ({
             signup: (newUser) => dispatch(signup(newUser))
         }

@@ -2,7 +2,7 @@ export default function signup(data) {
     return fetch(
         /*warm-citadel-97897.herokuapp.com*/
         /*stocks-mocks.herokuapp.com*/
-        'https://stocks-mocks.herokuapp.com/api/auth/signup',
+        'https://warm-citadel-97897.herokuapp.com/api/auth/signup',
         {
             method: 'POST',
             headers: new Headers({'Content-Type': 'application/json'}),

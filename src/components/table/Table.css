@@ -1,12 +1,14 @@
 .table{
-    height: 70px;
-    background: #487eb0;
 }
 .header{
     color: white;
     padding: 5px 10px ;
     font-size: 30px;
     font-weight: bold;
+    background: #487eb0;
+    height: 70px;
+    z-index: 2000;
+    box-shadow: 0px 5px 5px #000000b3;
 }
 .content{
 }

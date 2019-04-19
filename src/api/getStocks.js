@@ -1,4 +1,5 @@
 export default function getStocks(data) {
+        /*?search=abc&count=${data.stocksQuantity}$itemId=0*/
     return fetch(
         `https://stocks-mocks.herokuapp.com/api/stocks`,
         {

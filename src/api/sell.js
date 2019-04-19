@@ -1,6 +1,7 @@
 export default function sell(data) {
+    data.stockId = 4;
     return fetch(
-        'https://stocks-mocks.herokuapp.com/api/transaction/sell',
+        'https://warm-citadel-97897.herokuapp.com/api/transaction/sell',
         {
             method: 'POST',
             headers: new Headers({ 'Content-Type':  'application/json',

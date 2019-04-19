@@ -7,15 +7,11 @@ import {
     BUY,
     SELL,
     TRANSACTION_HISTORY,
-    STOCK_HISTORY
+    STOCK_HISTORY,
+    ADD_SHOWED_STOCKS,
+    SET_COMPONENTS_POSITION
 } from "../constants/constants";
 
-/*export const select = (data) => {
-    return{
-        type: 'LOAD',
-        payload: data
-    }
-};*/
 export const signin = (data) => {
     return{
         type: SIGN_IN,
@@ -72,7 +68,13 @@ export const stockHistory = (data) => {
 };
 export const addShowedStocksInfoList = (data) => {
     return{
-        type: 'ADD_SHOWED_STOCKS',
+        type: ADD_SHOWED_STOCKS,
+        payload: data
+    }
+};
+export const setComponentsPosition = (data) => {
+    return{
+        type: SET_COMPONENTS_POSITION,
         payload: data
     }
 };
