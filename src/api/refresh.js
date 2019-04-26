@@ -1,12 +1,10 @@
+import request from './request';
+
 export default function refresh(data) {
-    return fetch(
-        'https://stocks-mocks.herokuapp.com/api/auth/refresh',
-        {
-            method: 'POST',
-            headers: new Headers({ 'Content-Type':  'application/json'}),
-            body:  JSON.stringify(data)
-        })
-        .then(r =>{
-            return r.json();
-        });
+    return request({
+        path: 'https://warm-citadel-97897.herokuapp.com/api/auth/refresh',
+        method: 'POST',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: data
+    });
 }

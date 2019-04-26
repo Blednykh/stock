@@ -1,17 +1,11 @@
+import request from './request';
+
 export default function getStocks(data) {
-        /*?search=abc&count=${data.stocksQuantity}$itemId=0*/
-    return fetch(
-        `https://stocks-mocks.herokuapp.com/api/stocks`,
-        {
-            method: 'GET',
-            headers: new Headers({'Authorization': data.accessToken}),
-        })
-        .then(r => {
-            if (r.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    r.status);
-                return;
-            }
-            return r.json();
-        });
+    console.log(data);
+    return request({
+        path: `https://warm-citadel-97897.herokuapp.com/api/stocks?search=${data.search}&count=${data.count}&itemId=${data.itemId}`,
+        method: 'GET',
+        headers: new Headers({'Authorization': data.accessToken}),
+    });
 }
+
