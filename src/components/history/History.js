@@ -3,77 +3,92 @@ import './History.css';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {transactionHistoty} from "../../actions/index";
-import history from "../../history/history";
 import PortfolioItem from '../listItem/ListItem';
 
 class History extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state ={
-            stocksQuantity: 10,
+        this.state = {
+            count: 10,
             search: '',
             itemId: 0
         };
     }
-    componentWillMount = () => {
-        if(this.props.userInfo.accessToken === undefined) history.push('/signin');
+
+    setHistoryList = items => {
+        return items.map((item, index) =>
+            <PortfolioItem
+                index={index}
+                id={item.stock.id}
+                type='history'
+                key={index}
+            />);
     };
-
-
-    setHistoryList = () => {
-        if(this.props.userInfo.history!==undefined){
-            return this.props.userInfo.history.map((item,index)=>
-                <PortfolioItem
-                    index = {index}
-                    key = {index}
-                    type = 'history'
-                />
-            );
-        }
-    }
 
     quantityChange = () => {
-        let stocksQuantity = (this.state.stocksQuantity===10)?25:10;
-        this.setState({stocksQuantity});
+        const count = (this.state.count === 10) ? 25 : 10;
+
+        this.setState({count});
+        this.props.transactionHistoty({...this.state, count: count});
     };
 
-    searchChange = (event) => {
+    searchChange = event => {
+        if (event.target.value === "") {
+            this.props.transactionHistoty({...this.state, search: event.target.value});
+        }
         this.setState({search: event.target.value});
     };
 
-    searchClick = () => this.props.transactionHistoty({...this.state, accessToken: this.props.userInfo.accessToken, refreshToken: this.props.userInfo.refreshToken});
+    searchClick = () => this.props.transactionHistoty(this.state);
 
-    prefClick = () => {
-        let itemId = this.state.itemId;
-        if(itemId!==0)itemId-= this.state.stocksQuantity;
-        this.setState({itemId});
-        this.props.transactionHistoty({...this.state, accessToken: this.props.userInfo.accessToken, refreshToken: this.props.userInfo.refreshToken});
-    }
+    prevClick = prevItemId => () => {
+        const itemId = prevItemId;
 
-    nextClick = () => {
-        const itemId = this.state.itemId + this.state.stocksQuantity;
         this.setState({itemId});
-        this.props.transactionHistoty({...this.state, accessToken: this.props.userInfo.accessToken, refreshToken: this.props.userInfo.refreshToken});
-    }
+        this.props.transactionHistoty({...this.state, itemId: itemId});
+    };
+
+    nextClick = nextItemId => () => {
+        const itemId = nextItemId;
+
+        this.setState({itemId});
+        this.props.transactionHistoty({...this.state, itemId: itemId});
+    };
+
+    setDisableButtonPrev = (prevItemId, nextItemId, items) => {
+        return (prevItemId === nextItemId ||
+            nextItemId !== items[0].transactionId);
+    };
+
+    setDisableButtonNext = (prevItemId, nextItemId, items) => {
+        return (prevItemId === nextItemId ||
+            nextItemId === items[0].transactionId);
+    };
 
     render() {
+        const {prevItemId, nextItemId, items} = this.props.userInfo.history;
+
         return (
             <div className="history">
-                <div className = "search-box">
+                <div className="search-box">
                     <input type="text" placeholder="Search by stock..." onChange={this.searchChange}/>
                     <button className="searchButton" onClick={this.searchClick}>
                         <i className="fas fa-search"></i>
                     </button>
-                    <button className="countButton" title = "Кол-во акций на странице" onClick={this.quantityChange}>
-                        {this.state.stocksQuantity}
+                    <button className="countButton" title="Кол-во акций на странице" onClick={this.quantityChange}>
+                        {this.state.count}
                     </button>
                 </div>
                 <div className="historyList">
-                    {this.setHistoryList()}
+                    {this.setHistoryList(items)}
                 </div>
                 <div className="navigation">
-                    <button className="buttonPref" onClick={this.prefClick}>Pref</button>
-                    <button className="buttonNext" onClick={this.nextClick}>Next</button>
+                    <button className="buttonPrev" onClick={this.prevClick(prevItemId)}
+                            disabled={this.setDisableButtonPrev(prevItemId, nextItemId, items)}>Prev
+                    </button>
+                    <button className="buttonNext" onClick={this.nextClick(nextItemId)}
+                            disabled={this.setDisableButtonNext(prevItemId, nextItemId, items)}>Next
+                    </button>
                 </div>
             </div>
         )
@@ -81,11 +96,12 @@ class History extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return{
+    return {
         userInfo: state.userInfo
     };
 }
-function matchDispatchToProps (dispatch){
+
+function matchDispatchToProps(dispatch) {
     return bindActionCreators({transactionHistoty}, dispatch)
 
 }

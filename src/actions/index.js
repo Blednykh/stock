@@ -9,72 +9,86 @@ import {
     TRANSACTION_HISTORY,
     STOCK_HISTORY,
     ADD_SHOWED_STOCKS,
-    SET_COMPONENTS_POSITION
+    SET_COMPONENTS_POSITION,
+    LOGOUT,
+    ADD_TOKEN
 } from "../constants/constants";
 
 export const signin = (data) => {
-    return{
+    return {
         type: SIGN_IN,
         payload: data
     }
 };
 export const signup = (data) => {
-    return{
+    return {
         type: SIGN_UP,
         payload: data
     }
 };
 export const refresh = (data) => {
-    return{
+    return {
         type: REFRESH,
         payload: data
     }
 };
-export const addAccountInfo = (accessToken) => {
-    return{
+export const addAccountInfo = () => {
+    return {
         type: ADD_ACCOUNT_INFO,
-        payload: accessToken
     }
 };
 export const addStocks = (data) => {
-    return{
+    return {
         type: ADD_STOCKS,
         payload: data
     }
 };
 export const buy = (data) => {
-    return{
+    return {
         type: BUY,
         payload: data
     }
 };
 export const sell = (data) => {
-    return{
+    return {
         type: SELL,
         payload: data
     }
 };
 export const transactionHistoty = (data) => {
-    return{
+    return {
         type: TRANSACTION_HISTORY,
         payload: data
     }
 };
 export const stockHistory = (data) => {
-    return{
+    return {
         type: STOCK_HISTORY,
         payload: data
     }
 };
 export const addShowedStocksInfoList = (data) => {
-    return{
+    return {
         type: ADD_SHOWED_STOCKS,
         payload: data
     }
 };
 export const setComponentsPosition = (data) => {
-    return{
+    return {
         type: SET_COMPONENTS_POSITION,
         payload: data
+    }
+};
+
+export const addToken = (data) => {
+    return {
+        type: ADD_TOKEN,
+        payload: data
+    }
+};
+
+export const logout = () => {
+    return {
+        type: LOGOUT
     }
 };

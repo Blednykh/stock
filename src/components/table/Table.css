@@ -1,23 +1,23 @@
-.table{
-}
-.header{
+.header {
     color: white;
-    padding: 5px 10px ;
+    padding: 5px 20px;
     font-size: 30px;
     font-weight: bold;
-    background: #487eb0;
+    background: #01579B;
     height: 70px;
     z-index: 2000;
     box-shadow: 0px 5px 5px #000000b3;
 }
-.content{
-}
-.loader{
+
+.loader {
     position: absolute;
     top: 50%;
     right: 50%;
 }
-.user img{
-    width: 40px;
-    height: 40px;
+.logout{
+    font-size: 15px;
+}
+.logout:hover{
+    color: #ffdd2d;
+    cursor: pointer;
 }

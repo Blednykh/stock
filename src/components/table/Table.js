@@ -7,88 +7,115 @@ import Draggable from '../draggable/Draggable';
 import History from '../history/History';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {setComponentsPosition, addShowedStocksInfoList} from "../../actions/index";
+import {setComponentsPosition, addShowedStocksInfoList, addAccountInfo, addToken, logout} from "../../actions/index";
 import history from "../../history/history";
 import Loader from 'react-loader-spinner'
 
 
-
 class Table extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state ={
-        };
+        this.state = {};
     }
+
     componentWillMount = () => {
-        if (this.props.userInfo.accessToken===undefined) history.push('/signin');
-    };
+        const accessToken = localStorage.getItem('accessToken');
 
+        const refreshToken = localStorage.getItem('refreshToken');
 
-
-    setStockInfo = () => {
-        if(this.props.userInfo.showedStocksList!==undefined && this.props.userInfo.showedStocksList.length>0){
-            return this.props.userInfo.showedStocksList.map((item,index)=>
-                <Draggable
-                    name = "Информация об акции"
-                    component = {  <StockInfo
-                        id = {item}
-                        index = {index}
-                        key = {index}
-                    />}
-                    lockable = {true}
-                    stockClick = {this.stockClick}
-                    position = {3+index}
-                    key = {3+index}
-                />
-            );
+        if (accessToken === null) {
+            history.push('/signin');
+        } else {
+            this.props.addToken({
+                accessToken: accessToken,
+                refreshToken: refreshToken
+            });
+            this.props.addAccountInfo();
         }
     };
 
-    stockClick = (index) =>() => {
-        let showedStocksList = [];
-        if(this.props.userInfo.showedStocksList!==undefined)
-            showedStocksList = this.props.userInfo.showedStocksList;
-        if(showedStocksList.length>0) showedStocksList.splice(index,1);
-        else showedStocksList = [];
+    logoutClick = () => {
+        localStorage.removeItem('accessToken');
+
+        localStorage.removeItem('refreshToken');
+
+        this.props.logout();
+        history.push('/signin');
+    };
+
+    setStockInfo = (showedStocksList) => {
+        return showedStocksList.map((item, index) =>
+            <Draggable
+                name="Информация об акции"
+                lockable={true}
+                stockClick={this.stockClick}
+                position={3 + index}
+                key={3 + index}
+            >
+                <StockInfo
+                    id={item}
+                    index={index}
+                    key={index}
+                />
+            </Draggable>
+        );
+    };
+
+    stockClick = (index) => () => {
+        let {showedStocksList} = this.props.userInfo;
+
+        if (showedStocksList.length > 0) {
+            showedStocksList.splice(index, 1);
+        } else {
+            showedStocksList = [];
+        }
         this.props.addShowedStocksInfoList(showedStocksList);
     };
 
     render() {
-  /*      console.log(this.props.userInfo);*/
+        const {name, accountInfoLoading, showedStocksList} = this.props.userInfo;
+
         return (
             <div className="table">
-                <div className="header" >
+                <div className="header">
                     <div className="menu">
                         <span className="user">
-                            {this.props.userInfo.name}
+                            {name}
                         </span>
+                        <div className="logout" onClick={this.logoutClick}>Logout?</div>
                     </div>
                 </div>
                 <div className="content">
                     <Draggable
-                        name = "Мои акции"
-                        component = {<Portfolio/>}
-                        lockable = {false}
-                        position = {0}
-                        key = {0}
-                    />
+                        name="Мои акции"
+                        lockable={false}
+                        position={0}
+                        key={0}
+                    >
+                        <Portfolio/>
+                    </Draggable>
+
                     <Draggable
-                        name = "Список всех акций"
-                        component = {<StockList/>}
-                        lockable = {false}
-                        position = {1}
-                        key = {1}
-                    />
+                        name="Список всех акций"
+                        lockable={false}
+                        position={1}
+                        key={1}
+                    >
+                        <StockList/>
+                    </Draggable>
+
                     <Draggable
-                        name = "История транзакций"
-                        component = {<History/>}
-                        lockable = {false}
-                        position = {2}
-                        key = {2}
-                    />
-                    {this.setStockInfo()}
+                        name="История транзакций"
+                        lockable={false}
+                        position={2}
+                        key={2}
+                    >
+                        <History/>
+                    </Draggable>
+
+                    {this.setStockInfo(showedStocksList)}
                 </div>
-                <div className="loader" style={{display: this.props.userInfo.accountInfoLoading}}>
+                <div className="loader" style={{display: accountInfoLoading}}>
                     <Loader
                         type="Grid"
                         color="#487eb0"
@@ -102,11 +129,19 @@ class Table extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return{
+    return {
         userInfo: state.userInfo
     };
 }
-function matchDispatchToProps (dispatch){
-    return bindActionCreators({setComponentsPosition, addShowedStocksInfoList}, dispatch)
+
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators({
+        setComponentsPosition,
+        addShowedStocksInfoList,
+        addAccountInfo,
+        addToken,
+        logout
+    }, dispatch)
 }
-export default connect(mapStateToProps,matchDispatchToProps)(Table);
+
+export default connect(mapStateToProps, matchDispatchToProps)(Table);

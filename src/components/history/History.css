@@ -1,4 +1,4 @@
-.history{
+.history {
     width: 300px;
     text-align: left;
     overflow: hidden;
@@ -6,19 +6,20 @@
     position: relative;
 }
 
-.history .navigation{
-    background: #545355;
+.history .navigation {
+    background: #424242;
     position: absolute;
     bottom: 0px;
     width: 300px;
-    padding: 5px 10px ;
+    padding: 5px 10px;
     color: white;
     height: 30px;
     text-align: center;
     box-sizing: content-box;
 }
-.historyList{
-    background: #f4f4f4;
+
+.historyList {
+    background: #EEEEEE;
     min-height: 300px;
     overflow: auto;
     height: 300px;
