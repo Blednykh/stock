@@ -61,7 +61,7 @@ export const transactionHistoty = (data) => {
         payload: data
     }
 };
-export const stockHistory = (data) => {
+export const setStockHistory = (data) => {
     return {
         type: STOCK_HISTORY,
         payload: data

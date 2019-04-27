@@ -2,7 +2,7 @@ import React from 'react';
 import './StockInfo.css';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {stockHistory, sell, buy} from "../../actions/index";
+import {setStockHistory, sell, buy} from "../../actions/index";
 import {Chart} from "react-google-charts";
 
 class StockInfo extends React.Component {
@@ -19,28 +19,23 @@ class StockInfo extends React.Component {
     }
 
     componentWillMount = () => {
-        const {stockHistory, userInfo, id} = this.props;
+        const {setStockHistory, userInfo, id} = this.props;
 
-        stockHistory({
+        setStockHistory({
             id: id,
             range: "week"
         });
 
-        let inItems = false;
-
-        userInfo.stocks.forEach((item) => {
-            if (item.id === id) {
-                inItems = true;
-                this.setState({stock: item});
-            }
+        let stock = userInfo.stocks.find(item => {
+            return item.id === id
         });
-        if (!inItems) {
-            userInfo.items.forEach((item) => {
-                if (item.id === id) {
-                    this.setState({stock: item});
-                }
+
+        if (stock === undefined) {
+            stock = userInfo.items.find(item => {
+                return item.id === id
             });
         }
+        this.setState({stock});
 
     };
 
@@ -67,10 +62,10 @@ class StockInfo extends React.Component {
     };
 
     selectChange = e => {
-        const {stockHistory, id} = this.props;
+        const {setStockHistory, id} = this.props;
 
         this.setState({range: e.target.value});
-        stockHistory({
+        setStockHistory({
             id: id,
             range: e.target.value
         })
@@ -140,7 +135,6 @@ class StockInfo extends React.Component {
     setDisableBuyButton = (price, amount, balance) => {
         return Number(amount) === 0 || amount * price > balance;
     };
-
 
     render() {
         const {iconUrl, name, price, count} = this.state.stock;
@@ -213,7 +207,7 @@ function mapStateToProps(state) {
 }
 
 function matchDispatchToProps(dispatch) {
-    return bindActionCreators({stockHistory, sell, buy}, dispatch)
+    return bindActionCreators({setStockHistory, sell, buy}, dispatch)
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(StockInfo);

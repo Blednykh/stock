@@ -1,6 +1,6 @@
 import React from 'react';
 import './ListItem.css';
-import {addShowedStocksInfoList} from "../../actions";
+import {addShowedStocksInfoList, setStockHistory} from "../../actions";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
@@ -151,7 +151,7 @@ function mapStateToProps(state) {
 }
 
 function matchDispatchToProps(dispatch) {
-    return bindActionCreators({addShowedStocksInfoList}, dispatch)
+    return bindActionCreators({addShowedStocksInfoList, setStockHistory}, dispatch)
 
 }
 

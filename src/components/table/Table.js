@@ -36,9 +36,7 @@ class Table extends React.Component {
 
     logoutClick = () => {
         localStorage.removeItem('accessToken');
-
         localStorage.removeItem('refreshToken');
-
         this.props.logout();
         history.push('/signin');
     };
@@ -84,7 +82,8 @@ class Table extends React.Component {
                         </div>
                         <div className="logout" onClick={this.logoutClick}>
                             <i className="fas fa-sign-out-alt"></i>
-                             Logout</div>
+                            Logout
+                        </div>
                     </div>
                 </div>
                 <div className="content">
