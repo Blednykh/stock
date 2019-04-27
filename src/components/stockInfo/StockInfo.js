@@ -44,7 +44,6 @@ class StockInfo extends React.Component {
 
     };
 
-
     sellClick = () => {
         const {sell, id} = this.props;
 
@@ -91,8 +90,12 @@ class StockInfo extends React.Component {
         });
 
         return {
-            explorer: {axis: 'horizontal', keepInBounds: true},
-            hAxis: {format: "MMM d, y", title: "Date", viewWindow: {min: dateMin, max: dateMax}},
+            explorer: {axis: "horizontal", keepInBounds: true},
+            hAxis: {
+                format: "MMM d, y",
+                title: "Date",
+                viewWindow: {min: dateMin, max: dateMax}
+            },
             vAxis: {title: "Price", viewWindow: {min: priceMin, max: priceMax}},
             legend: "none",
             width: "350",
@@ -113,7 +116,7 @@ class StockInfo extends React.Component {
     setSum = (price, amount) => {
         const sum = amount * price;
 
-        return (sum.toString().length < 10) ? sum.toString() + ' $' : "lots of";
+        return (sum.toString().length < 10) ? sum.toString() +  "$" : "lots of";
     };
 
 
@@ -131,11 +134,11 @@ class StockInfo extends React.Component {
     };
 
     setDisableSellButton = (count, amount) => {
-        return (count === 0 || count === undefined || count < amount || amount == 0);
+        return !count || count < amount || Number(amount) === 0;
     };
 
     setDisableBuyButton = (price, amount, balance) => {
-        return (amount == 0 || ((amount * price) > balance));
+        return Number(amount) === 0 || amount * price > balance;
     };
 
 
@@ -184,11 +187,17 @@ class StockInfo extends React.Component {
                         <button className="maxButton" onClick={this.maxClick(price, balance)}>MAX</button>
                     </div>
                     <div className="stockInfoNavigation">
-                        <button className="sellButton" disabled={this.setDisableSellButton(count, amount)}
-                                onClick={this.sellClick}>Sell
+                        <button
+                            className="sellButton"
+                            disabled={this.setDisableSellButton(count, amount)}
+                            onClick={this.sellClick}>
+                            Sell
                         </button>
-                        <button className="buyButton" disabled={this.setDisableBuyButton(price, amount, balance)}
-                                onClick={this.buyClick}>Buy
+                        <button
+                            className="buyButton"
+                            disabled={this.setDisableBuyButton(price, amount, balance)}
+                            onClick={this.buyClick}>
+                            Buy
                         </button>
                     </div>
                 </div>

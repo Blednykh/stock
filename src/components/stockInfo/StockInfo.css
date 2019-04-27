@@ -48,22 +48,7 @@
     z-index: 1;
 }
 
-.closeButton {
-    background: #424242;
-    margin-right: 20px;
-    color: white;
-    align-self: center;
-    font-weight: normal;
 
-}
-
-.fa-times {
-    transition: 0.3s;
-}
-
-.closeButton:hover .fa-times {
-    color: #FDD835;
-}
 
 .stockInfoFooter .navigation button {
     border-radius: 100px;
@@ -143,10 +128,12 @@
 }
 
 .sellButton:hover {
+    transform: scale(0.99);
     background: #ffcdd2;
 }
 
 .buyButton:hover {
+    transform: scale(0.99);
     background: #C8E6C9;
 }
 
@@ -166,6 +153,7 @@
     background: white;
     width: 100px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .stockInfoNavigation button:disabled {
@@ -184,3 +172,4 @@
     text-align: center;
     box-sizing: content-box;
 }
+

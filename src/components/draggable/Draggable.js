@@ -69,7 +69,7 @@ class Draggable extends React.Component {
 
     setCloseButton = lockable => {
         if (lockable) {
-            return <div className="closeButton" onClick={this.props.stockClick(this.props.id)}>
+            return <div className="closeButton" onClick={this.props.lockClick(this.props.id)}>
                 <i className="fas fa-times"></i>
             </div>
         }

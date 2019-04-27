@@ -56,6 +56,7 @@ export default function (state = initialState, action) {
         case DONE_TRANSACTION_HISTORY:
             return {...state, history: action.payload};
         case DONE_STOCK_HISTORY:
+
             return {...state, stockHistory: action.payload};
         case WRONG_CREDENTIALS:
             return {...state, displayErrorPasswordText: "inherit"};

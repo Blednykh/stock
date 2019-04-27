@@ -48,7 +48,7 @@ class Table extends React.Component {
             <Draggable
                 name="Информация об акции"
                 lockable={true}
-                stockClick={this.stockClick}
+                lockClick={this.lockClick}
                 position={3 + index}
                 key={3 + index}
             >
@@ -61,7 +61,7 @@ class Table extends React.Component {
         );
     };
 
-    stockClick = (index) => () => {
+    lockClick = (index) => () => {
         let {showedStocksList} = this.props.userInfo;
 
         if (showedStocksList.length > 0) {
@@ -79,10 +79,12 @@ class Table extends React.Component {
             <div className="table">
                 <div className="header">
                     <div className="menu">
-                        <span className="user">
+                        <div className="user">
                             {name}
-                        </span>
-                        <div className="logout" onClick={this.logoutClick}>Logout?</div>
+                        </div>
+                        <div className="logout" onClick={this.logoutClick}>
+                            <i className="fas fa-sign-out-alt"></i>
+                             Logout</div>
                     </div>
                 </div>
                 <div className="content">

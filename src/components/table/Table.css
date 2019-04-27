@@ -1,10 +1,11 @@
 .header {
     color: white;
-    padding: 5px 20px;
+    padding: 5px 50px;
     font-size: 30px;
     font-weight: bold;
-    background: #01579B;
-    height: 70px;
+    background: url("../../img/background.jpg");
+    background-size: 600px;
+    height: 50px;
     z-index: 2000;
     box-shadow: 0px 5px 5px #000000b3;
 }
@@ -21,3 +22,20 @@
     color: #ffdd2d;
     cursor: pointer;
 }
+
+.logout:hover .fa-sign-out-alt{
+    margin-right: 0px;
+}
+
+.menu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fa-sign-out-alt{
+    transition: 0.5s;
+    margin-right: 2px;
+}
+

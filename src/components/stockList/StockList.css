@@ -83,10 +83,12 @@
     background: white;
     width: 100px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .navigation button:hover {
-    background: #e6e6e6
+    background: #FDD835;
+    transform: scale(0.99);
 }
 
 .navigation button:disabled {

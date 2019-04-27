@@ -46,45 +46,53 @@ class ListItem extends React.Component {
 
 
     setContent = (index, userInfo, type) => {
+        let stockName;
+
+        let stockCount;
+
+        let stockPrice;
+
+        let stockHistory;
+
+        let stockDate;
+
         switch (type) {
             case 'portfolio': {
-                return <div className="stockInfo">
-                    <div className="stockInfoLeft">
-                        <div className="stockName">{userInfo.stocks[index].name}</div>
-                        <div className="stockCount">{Math.abs(userInfo.stocks[index].count)} шт</div>
-                    </div>
-                    <div className="stockInfoRight">
-                        <div className="stockPrice">{userInfo.stocks[index].price.toFixed(2)} $</div>
-                        <div className="stockHistory">{userInfo.stocks[index].priceDelta.toFixed(2)}</div>
-                    </div>
-                </div>
+                stockName = userInfo.stocks[index].name;
+                stockCount = Math.abs(userInfo.stocks[index].count);
+                stockPrice = userInfo.stocks[index].price.toFixed(2);
+                stockHistory = userInfo.stocks[index].priceDelta.toFixed(2);
+                break;
             }
             case 'stocks-list': {
-                return <div className="stockInfo">
-                    <div className="stockInfoLeft">
-                        <div className="stockName">{userInfo.items[index].name}</div>
-                    </div>
-                    <div className="stockInfoRight">
-                        <div className="stockPrice">{userInfo.items[index].price.toFixed(2)} $</div>
-                        <div className="stockHistory">{userInfo.items[index].priceDelta.toFixed(2)}</div>
-                    </div>
-                </div>
+                stockName = userInfo.items[index].name;
+                stockPrice = userInfo.items[index].price.toFixed(2);
+                stockHistory = userInfo.items[index].priceDelta.toFixed(2);
+                break;
             }
             case 'history': {
-                return <div className="stockInfo">
-                    <div className="stockInfoLeft">
-                        <div className="stockName">{userInfo.history.items[index].stock.name}</div>
-                        <div className="stockCount">{Math.abs(userInfo.history.items[index].amount)} шт</div>
-                    </div>
-                    <div className="stockInfoRight">
-                        <div className="stockDate">{this.formatDate(userInfo.history.items[index].date)}</div>
-                        <div className="stockHistory">на
-                            сумму: {userInfo.history.items[index].totalPrice.toFixed(2)} $
-                        </div>
-                    </div>
-                </div>
+                stockName = userInfo.history.items[index].stock.name;
+                stockCount = Math.abs(userInfo.history.items[index].amount);
+                stockDate = this.formatDate(userInfo.history.items[index].date);
+                stockHistory = "на сумму:" + userInfo.history.items[index].totalPrice.toFixed(2);
+                break;
             }
+
         }
+
+        return (
+            <div className="stockInfo">
+                <div className="stockInfoLeft">
+                    <div className="stockName">{stockName}</div>
+                    {stockCount && <div className="stockCount">{stockCount} шт</div>}
+                </div>
+                <div className="stockInfoRight">
+                    {stockPrice ? <div className="stockPrice">{stockPrice} $</div> :
+                        <div className="stockDate">{stockDate}</div>}
+                    <div className="stockHistory">{stockHistory}</div>
+                </div>
+            </div>)
+
     };
 
     setImg = (index, userInfo, type) => {
@@ -103,10 +111,14 @@ class ListItem extends React.Component {
 
 
     stockClick = () => {
-        const {showedStocksList} = this.props.userInfo;
+        const {userInfo: {showedStocksList}, id} = this.props;
 
-        showedStocksList.push(this.props.id);
-        this.props.addShowedStocksInfoList(showedStocksList);
+        if (showedStocksList.find(item => {
+            return item === id
+        }) === undefined) {
+            showedStocksList.push(id);
+            this.props.addShowedStocksInfoList(showedStocksList);
+        }
     };
 
     setClassName = (index, userInfo, type) => {
