@@ -78,7 +78,7 @@ class ListItem extends React.Component {
                 stockName = userInfo.history.items[index].stock.name;
                 stockCount = Math.abs(userInfo.history.items[index].amount);
                 stockDate = this.formatDate(userInfo.history.items[index].date);
-                stockHistory = "на сумму:" + userInfo.history.items[index].totalPrice.toFixed(2);
+                stockHistory = "на сумму: " + userInfo.history.items[index].totalPrice.toFixed(2) + " $";
                 break;
             }
 
