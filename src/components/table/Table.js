@@ -48,6 +48,7 @@ class Table extends React.Component {
                 lockable={true}
                 lockClick={this.lockClick}
                 position={3 + index}
+                id={item}
                 key={3 + index}
             >
                 <StockInfo
@@ -59,11 +60,14 @@ class Table extends React.Component {
         );
     };
 
-    lockClick = (index) => () => {
+    lockClick = (id) => () => {
         let {showedStocksList} = this.props.userInfo;
 
         if (showedStocksList.length > 0) {
-            showedStocksList.splice(index, 1);
+            showedStocksList = showedStocksList.filter(item=>{
+                return item !== id
+            });
+          /*  showedStocksList.splice(index-1, 1);*/
         } else {
             showedStocksList = [];
         }

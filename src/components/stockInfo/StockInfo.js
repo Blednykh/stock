@@ -4,6 +4,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {setStockHistory, sell, buy} from "../../actions/index";
 import {Chart} from "react-google-charts";
+import Loader from "react-loader-spinner";
 
 class StockInfo extends React.Component {
     constructor(props) {
@@ -11,31 +12,16 @@ class StockInfo extends React.Component {
         this.state = {
             amount: 0,
             range: "week",
-            stock: {
-                price: 0,
-                count: 0
-            }
         };
     }
 
     componentWillMount = () => {
-        const {setStockHistory, userInfo, id} = this.props;
+        const {setStockHistory, id} = this.props;
 
         setStockHistory({
             id: id,
             range: "week"
         });
-
-        let stock = userInfo.stocks.find(item => {
-            return item.id === id
-        });
-
-        if (stock === undefined) {
-            stock = userInfo.items.find(item => {
-                return item.id === id
-            });
-        }
-        this.setState({stock});
 
     };
 
@@ -71,8 +57,9 @@ class StockInfo extends React.Component {
         })
     };
 
-    setChartOption = () => {
-        const {history} = this.props.userInfo.stockHistory;
+    setChartOption = stockHistory => {
+
+        const {history} = stockHistory;
 
         const dateMin = history[0].data;
 
@@ -97,10 +84,10 @@ class StockInfo extends React.Component {
         }
     };
 
-    setChartData = () => {
+    setChartData = stockHistory => {
         const Data = [["Date", "Price"]];
 
-        this.props.userInfo.stockHistory.history.forEach(item => {
+        stockHistory.history.forEach(item => {
             let date = new Date(item.data);
 
             Data.push([date, item.price]);
@@ -111,7 +98,7 @@ class StockInfo extends React.Component {
     setSum = (price, amount) => {
         const sum = amount * price;
 
-        return (sum.toString().length < 10) ? sum.toString() +  "$" : "lots of";
+        return (sum.toFixed(2).toString().length < 10) ? sum.toFixed(2).toString() +  "$" : "lots of";
     };
 
 
@@ -136,26 +123,16 @@ class StockInfo extends React.Component {
         return Number(amount) === 0 || amount * price > balance;
     };
 
-    render() {
-        const {iconUrl, name, price, count} = this.state.stock;
+    setChart = () => {
+        let stockHistory = this.props.userInfo.stockHistoryList.find(item => {
+            return item.stockId === this.props.id
+        });
+        if(stockHistory!==undefined){
+            const options = this.setChartOption(stockHistory);
 
-        const {amount} = this.state;
+            const data = this.setChartData(stockHistory);
 
-        const {balance} = this.props.userInfo;
-
-        const options = this.setChartOption();
-
-        const data = this.setChartData();
-
-        return (
-            <div className="stockInf">
-                <div className="info">
-                    <div className="stockInfoImg"><img src={iconUrl}/></div>
-                    <div className="stockInfoRight">
-                        <div className="stockInfoName">{name}</div>
-                        <div className="stockInfoPrice">{price.toFixed(2)}$</div>
-                    </div>
-                </div>
+            return(
                 <div className="chart_div">
                     <select onChange={this.selectChange} defaultValue="week">
                         <option>day</option>
@@ -173,7 +150,50 @@ class StockInfo extends React.Component {
                         height="100%"
                         legendToggle
                     />
+                </div>)
+        } else {
+            return(
+                <div className="chart_div">
+                    Loading Chart...
                 </div>
+               )
+        }
+    };
+
+    setStock = () => {
+        const {userInfo, id} = this.props;
+
+        let stock = userInfo.stocks.find(item => {
+            return item.id === id
+        });
+
+        if (stock === undefined) {
+            stock = userInfo.items.find(item => {
+                return item.id === id
+            });
+        }
+        return stock;
+    };
+
+    render() {
+        const {amount} = this.state;
+
+        const {balance} = this.props.userInfo;
+
+        const stock = this.setStock();
+
+        const {iconUrl, name, price, count} = stock;
+
+        return (
+            <div className="stockInf">
+                <div className="info">
+                    <div className="stockInfoImg"><img src={iconUrl}/></div>
+                    <div className="stockInfoRight">
+                        <div className="stockInfoName">{name}</div>
+                        <div className="stockInfoPrice">{price.toFixed(2)}$</div>
+                    </div>
+                </div>
+                {this.setChart()}
                 <div className="stockInfoFooter">
                     <div className="stockInfoAmount">
                         <input ref={this.getInput} placeholder="Amount stocks..." onChange={this.amountChange}/>

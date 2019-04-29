@@ -57,7 +57,7 @@ class History extends React.Component {
 
     setDisableButtonPrev = (prevItemId, nextItemId, items) => {
         return (prevItemId === nextItemId ||
-            nextItemId !== items[0].transactionId);
+            prevItemId === items[0].transactionId);
     };
 
     setDisableButtonNext = (prevItemId, nextItemId, items) => {

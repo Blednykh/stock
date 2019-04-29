@@ -28,7 +28,7 @@ class StockList extends React.Component {
 
 
     quantityChange = () => {
-        const count = (this.state.count === 10) ? 2 : 10;
+        const count = (this.state.count === 10) ? 25 : 10;
 
         this.setState({count});
         this.props.addStocks({...this.state, count: count});
@@ -58,7 +58,8 @@ class StockList extends React.Component {
     };
 
     setDisableButtonPrev = (prevItemId, nextItemId) => {
-        return (prevItemId === nextItemId || nextItemId !== this.props.userInfo.items[0].id);
+        console.log(this.props.userInfo);
+        return (prevItemId === nextItemId || prevItemId === this.props.userInfo.items[0].id);
     };
 
     setDisableButtonNext = (prevItemId, nextItemId) => {

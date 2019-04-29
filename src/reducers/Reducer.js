@@ -28,7 +28,8 @@ const initialState = {
     balance: 0,
     stockHistory: {
         history: [{data: "", price: 0}]
-    }
+    },
+    stockHistoryList: []
 };
 
 export default function (state = initialState, action) {
@@ -56,6 +57,15 @@ export default function (state = initialState, action) {
         case DONE_TRANSACTION_HISTORY:
             return {...state, history: action.payload};
         case DONE_STOCK_HISTORY:
+            if (state.stockHistoryList.find(item => {
+                return item.stockId === action.payload.stockId;
+            }) !== undefined) {
+                state.stockHistoryList = state.stockHistoryList.map(item => {
+                    return (item.stockId === action.payload.stockId) ? action.payload : item;
+                });
+            } else {
+                state.stockHistoryList.push(action.payload);
+            }
             return {...state, stockHistory: action.payload};
         case WRONG_CREDENTIALS:
             return {...state, displayErrorPasswordText: "inherit"};
