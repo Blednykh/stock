@@ -154,7 +154,14 @@ class StockInfo extends React.Component {
         } else {
             return(
                 <div className="chart_div">
-                    Loading Chart...
+                    <div className="chart_loader">
+                        <Loader
+                            type="ThreeDots"
+                            color="#487eb0"
+                            height="50"
+                            width="50"
+                        />
+                    </div>
                 </div>
                )
         }

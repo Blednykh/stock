@@ -15,8 +15,8 @@ import {
 
 const initialState = {
     position: {
-        positionTop: ["120px", "120px", "120px", "120px"],
-        positionLeft: ["20px", "350px", "680px", "1010px"],
+        positionTop: ["120px", "120px", "120px"],
+        positionLeft: ["20px", "350px", "680px"],
         zIndex: [1, 2, 3, 4]
     },
     history: {

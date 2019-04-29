@@ -47,7 +47,6 @@ class Draggable extends React.Component {
         position.zIndex = this.props.userInfo.position.zIndex.map((item, id) => {
             return (id === this.props.position) ? this.props.userInfo.position.zIndex.length : 0;
         });
-
         this.props.setComponentsPosition(position);
     };
 

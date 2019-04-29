@@ -61,13 +61,35 @@ class Table extends React.Component {
     };
 
     lockClick = (id) => () => {
-        let {showedStocksList} = this.props.userInfo;
+        let {showedStocksList, position} = this.props.userInfo;
 
-        if (showedStocksList.length > 0) {
+        if (showedStocksList.length > 0)
+        {
+            let deletedIndex = Infinity;
+
+            showedStocksList.forEach((item,index)=>{
+                if(index > deletedIndex){
+                    position.positionTop[index+3] =  position.positionTop[index+4];
+                    position.positionLeft[index+3] =  position.positionLeft[index+4];
+                    position.zIndex[index+3] =  position.zIndex[index+4];
+                }
+                if(item === id) {
+                    deletedIndex = index;
+                    position.positionTop[index+3] =  position.positionTop[index+4];
+                    position.positionLeft[index+3] =  position.positionLeft[index+4];
+                    position.zIndex[index+3] =  position.zIndex[index+4];
+                }
+            });
+
+            position.positionTop.pop();
+            position.positionLeft.pop();
+            position.zIndex.pop();
+
+            this.props.setComponentsPosition(position);
+
             showedStocksList = showedStocksList.filter(item=>{
                 return item !== id
             });
-          /*  showedStocksList.splice(index-1, 1);*/
         } else {
             showedStocksList = [];
         }

@@ -1,6 +1,6 @@
 import React from 'react';
 import './ListItem.css';
-import {addShowedStocksInfoList, setStockHistory} from "../../actions";
+import {addShowedStocksInfoList, setStockHistory, setComponentsPosition} from "../../actions";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
@@ -111,13 +111,23 @@ class ListItem extends React.Component {
 
 
     stockClick = () => {
-        const {userInfo: {showedStocksList}, id} = this.props;
+        const {userInfo: {showedStocksList, position}, setComponentsPosition, addShowedStocksInfoList, id, index} = this.props;
+
+        let {positionTop, positionLeft, zIndex} = position;
+
+        const lastPosition = positionTop.length-1;
 
         if (showedStocksList.find(item => {
             return item === id
         }) === undefined) {
+
+            position.positionTop.push(Number(positionTop[lastPosition].substring(0, positionTop[lastPosition].length - 2)) + 50 + "px");
+            position.positionLeft.push(Number(positionLeft[lastPosition].substring(0, positionLeft[lastPosition].length - 2)) + 100 + "px");
+            position.zIndex.push(zIndex[lastPosition] + 1);
+            setComponentsPosition(position);
+            console.log(position);
             showedStocksList.push(id);
-            this.props.addShowedStocksInfoList(showedStocksList);
+            addShowedStocksInfoList(showedStocksList);
         }
     };
 
@@ -151,7 +161,7 @@ function mapStateToProps(state) {
 }
 
 function matchDispatchToProps(dispatch) {
-    return bindActionCreators({addShowedStocksInfoList, setStockHistory}, dispatch)
+    return bindActionCreators({addShowedStocksInfoList, setStockHistory, setComponentsPosition}, dispatch)
 
 }
 

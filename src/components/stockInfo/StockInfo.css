@@ -173,3 +173,8 @@
     box-sizing: content-box;
 }
 
+.chart_loader{
+    position: absolute;
+    top: 100px;
+    left: 120px;
+}

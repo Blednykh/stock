@@ -15,7 +15,6 @@ class StockList extends React.Component {
         };
     }
 
-
     setStockList = (items) => {
         return items.map((item, index) =>
             <PortfolioItem
@@ -25,7 +24,6 @@ class StockList extends React.Component {
                 key={index}
             />);
     };
-
 
     quantityChange = () => {
         const count = (this.state.count === 10) ? 25 : 10;
@@ -58,7 +56,6 @@ class StockList extends React.Component {
     };
 
     setDisableButtonPrev = (prevItemId, nextItemId) => {
-        console.log(this.props.userInfo);
         return (prevItemId === nextItemId || prevItemId === this.props.userInfo.items[0].id);
     };
 
