@@ -98,7 +98,9 @@ class StockInfo extends React.Component {
     setSum = (price, amount) => {
         const sum = amount * price;
 
-        return (sum.toFixed(2).toString().length < 10) ? sum.toFixed(2).toString() +  "$" : "lots of";
+        return sum.toFixed(2).toString().length < 10
+            ? sum.toFixed(2).toString() + "$"
+            : "lots of";
     };
 
 
@@ -203,7 +205,11 @@ class StockInfo extends React.Component {
                 {this.setChart()}
                 <div className="stockInfoFooter">
                     <div className="stockInfoAmount">
-                        <input ref={this.getInput} placeholder="Amount stocks..." onChange={this.amountChange}/>
+                        <input
+                            ref={this.getInput}
+                            placeholder="Amount stocks..."
+                            onChange={this.amountChange}
+                        />
                         <span className="stockInfoSum">{this.setSum(price, amount)}</span>
                         <button className="maxButton" onClick={this.maxClick(price, balance)}>MAX</button>
                     </div>

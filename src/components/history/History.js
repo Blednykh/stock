@@ -16,13 +16,14 @@ class History extends React.Component {
     }
 
     setHistoryList = items => {
-        return items.map((item, index) =>
+        return items.map((item, index) => (
             <PortfolioItem
                 index={index}
                 id={item.stock.id}
-                type='history'
+                type="history"
                 key={index}
-            />);
+            />
+        ));
     };
 
     quantityChange = () => {
@@ -34,9 +35,12 @@ class History extends React.Component {
 
     searchChange = event => {
         if (event.target.value === "") {
-            this.props.transactionHistoty({...this.state, search: event.target.value});
+            this.props.transactionHistoty({
+                ...this.state,
+                search: event.target.value
+            });
         }
-        this.setState({search: event.target.value});
+        this.setState({ search: event.target.value });
     };
 
     searchClick = () => this.props.transactionHistoty(this.state);
@@ -71,27 +75,41 @@ class History extends React.Component {
         return (
             <div className="history">
                 <div className="search-box">
-                    <input type="text" placeholder="Search by stock..." onChange={this.searchChange}/>
+                    <input
+                        type="text"
+                        placeholder="Search by stock..."
+                        onChange={this.searchChange}
+                    />
                     <button className="searchButton" onClick={this.searchClick}>
-                        <i className="fas fa-search"></i>
+                        <i className="fas fa-search" />
                     </button>
-                    <button className="countButton" title="Кол-во акций на странице" onClick={this.quantityChange}>
+                    <button
+                        className="countButton"
+                        title="Кол-во акций на странице"
+                        onClick={this.quantityChange}
+                    >
                         {this.state.count}
                     </button>
                 </div>
-                <div className="historyList">
-                    {this.setHistoryList(items)}
-                </div>
+                <div className="historyList">{this.setHistoryList(items)}</div>
                 <div className="navigation">
-                    <button className="buttonPrev" onClick={this.prevClick(prevItemId)}
-                            disabled={this.setDisableButtonPrev(prevItemId, nextItemId, items)}>Prev
+                    <button
+                        className="buttonPrev"
+                        onClick={this.prevClick(prevItemId)}
+                        disabled={this.setDisableButtonPrev(prevItemId, nextItemId, items)}
+                    >
+                        Prev
                     </button>
-                    <button className="buttonNext" onClick={this.nextClick(nextItemId)}
-                            disabled={this.setDisableButtonNext(prevItemId, nextItemId, items)}>Next
+                    <button
+                        className="buttonNext"
+                        onClick={this.nextClick(nextItemId)}
+                        disabled={this.setDisableButtonNext(prevItemId, nextItemId, items)}
+                    >
+                        Next
                     </button>
                 </div>
             </div>
-        )
+        );
     }
 }
 

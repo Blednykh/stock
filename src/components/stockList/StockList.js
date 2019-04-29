@@ -15,14 +15,15 @@ class StockList extends React.Component {
         };
     }
 
-    setStockList = (items) => {
-        return items.map((item, index) =>
+    setStockList = items => {
+        return items.map((item, index) => (
             <PortfolioItem
                 index={index}
                 id={item.id}
-                type='stocks-list'
+                type="stocks-list"
                 key={index}
-            />);
+            />
+        ));
     };
 
     quantityChange = () => {
@@ -69,7 +70,11 @@ class StockList extends React.Component {
         return (
             <div className="stockList">
                 <div className="search-box">
-                    <input type="text" placeholder="Search stocks..." onChange={this.searchChange}/>
+                    <input
+                        type="text"
+                        placeholder="Search stocks..."
+                        onChange={this.searchChange}
+                    />
                     <button className="searchButton" onClick={this.searchClick}>
                         <i className="fas fa-search"></i>
                     </button>

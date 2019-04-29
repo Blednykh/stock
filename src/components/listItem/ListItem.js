@@ -1,8 +1,12 @@
-import React from 'react';
-import './ListItem.css';
-import {addShowedStocksInfoList, setStockHistory, setComponentsPosition} from "../../actions";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
+import React from "react";
+import "./ListItem.css";
+import {
+    addShowedStocksInfoList,
+    setStockHistory,
+    setComponentsPosition
+} from "../../actions";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 class ListItem extends React.Component {
     constructor(props) {
@@ -97,14 +101,26 @@ class ListItem extends React.Component {
 
     setImg = (index, userInfo, type) => {
         switch (type) {
-            case 'history': {
-                return <div className="stockImg"><img src={userInfo.history.items[index].stock.iconUrl}/></div>
+            case "history": {
+                return (
+                    <div className="stockImg">
+                        <img src={userInfo.history.items[index].stock.iconUrl} />
+                    </div>
+                );
             }
-            case 'stocks-list': {
-                return <div className="stockImg"><img src={userInfo.items[index].iconUrl}/></div>
+            case "stocks-list": {
+                return (
+                    <div className="stockImg">
+                        <img src={userInfo.items[index].iconUrl} />
+                    </div>
+                );
             }
-            case 'portfolio': {
-                return <div className="stockImg"><img src={userInfo.stocks[index].iconUrl}/></div>
+            case "portfolio": {
+                return (
+                    <div className="stockImg">
+                        <img src={userInfo.stocks[index].iconUrl} />
+                    </div>
+                );
             }
         }
     };
@@ -125,17 +141,18 @@ class ListItem extends React.Component {
             position.positionLeft.push(Number(positionLeft[lastPosition].substring(0, positionLeft[lastPosition].length - 2)) + 100 + "px");
             position.zIndex.push(zIndex[lastPosition] + 1);
             setComponentsPosition(position);
-            console.log(position);
             showedStocksList.push(id);
             addShowedStocksInfoList(showedStocksList);
         }
     };
 
     setClassName = (index, userInfo, type) => {
-        if (type !== 'history') {
-            return "listItem"
+        if (type !== "history") {
+            return "listItem";
         } else {
-            return (userInfo.history.items[index].type === 'buy') ? "listItemBuy" : "listItemSell";
+            return userInfo.history.items[index].type === "buy"
+                ? "listItemBuy"
+                : "listItemSell";
         }
     };
 

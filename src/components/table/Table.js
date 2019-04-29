@@ -1,15 +1,21 @@
-import React from 'react';
-import './Table.css';
-import Portfolio from '../portfolio/Portfolio';
-import StockList from '../stockList/StockList';
-import StockInfo from '../stockInfo/StockInfo';
-import Draggable from '../draggable/Draggable';
-import History from '../history/History';
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
-import {setComponentsPosition, addShowedStocksInfoList, addAccountInfo, addToken, logout} from "../../actions/index";
+import React from "react";
+import "./Table.css";
+import Portfolio from "../portfolio/Portfolio";
+import StockList from "../stockList/StockList";
+import StockInfo from "../stockInfo/StockInfo";
+import Draggable from "../draggable/Draggable";
+import History from "../history/History";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import {
+    setComponentsPosition,
+    addShowedStocksInfoList,
+    addAccountInfo,
+    addToken,
+    logout
+} from "../../actions/index";
 import history from "../../history/history";
-import Loader from 'react-loader-spinner'
+import Loader from "react-loader-spinner";
 
 
 class Table extends React.Component {
@@ -35,14 +41,14 @@ class Table extends React.Component {
     };
 
     logoutClick = () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         this.props.logout();
-        history.push('/signin');
+        history.push("/signin");
     };
 
-    setStockInfo = (showedStocksList) => {
-        return showedStocksList.map((item, index) =>
+    setStockInfo = showedStocksList => {
+        return showedStocksList.map((item, index) => (
             <Draggable
                 name="Информация об акции"
                 lockable={true}
@@ -51,16 +57,12 @@ class Table extends React.Component {
                 id={item}
                 key={3 + index}
             >
-                <StockInfo
-                    id={item}
-                    index={index}
-                    key={index}
-                />
+                <StockInfo id={item} index={index} key={index} />
             </Draggable>
-        );
+        ));
     };
 
-    lockClick = (id) => () => {
+    lockClick = id => () => {
         let {showedStocksList, position} = this.props.userInfo;
 
         if (showedStocksList.length > 0)

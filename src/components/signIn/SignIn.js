@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Link, Redirect} from "react-router-dom";
+import {Route, Link} from "react-router-dom";
 import './SignIn.css';
 import SignUp from "../signUp/SignUp";
 import {connect} from "react-redux";
@@ -32,13 +32,27 @@ class SignIn extends React.Component {
                 <div className="signin-form" style={{display: displayForm}}>
                     <div className="form">
                         <h1>Sign In</h1>
-                        <input type="text" placeholder="User Name" className="txtb" onChange={this.onUserNameChange}/>
-                        <input type="password" placeholder="Password" className="txtb"
-                               onChange={this.onPasswordChange}/>
+                        <input
+                            type="text"
+                            placeholder="User Name"
+                            className="txtb"
+                            onChange={this.onUserNameChange}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className="txtb"
+                            onChange={this.onPasswordChange}
+                        />
                         <span className="errorText" style={{display: displayErrorPasswordText}}>
-                        Pair login-password doesn't match!
-                    </span>
-                        <input type="submit" value="Sign In" className="signin-btn" onClick={this.handleSubmit}/>
+                            Pair login-password doesn't match!
+                        </span>
+                        <input
+                            type="submit"
+                            value="Sign In"
+                            className="signin-btn"
+                            onClick={this.handleSubmit}
+                        />
                         <Link to="/SignUp">Create an account?</Link>
                         <Route path="/SignUp" component={SignUp}/>
                     </div>

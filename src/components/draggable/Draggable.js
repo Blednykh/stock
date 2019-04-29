@@ -34,18 +34,20 @@ class Draggable extends React.Component {
 
 
     onMouseUp = () => {
-        this.setState({down: false});
+        this.setState({ down: false });
 
         const documentElem = this.transporter;
 
-        documentElem.style.zIndex = '999';
+        documentElem.style.zIndex = "999";
 
         const position = this.props.userInfo.position;
 
         position.positionLeft[this.props.position] = documentElem.style.left;
         position.positionTop[this.props.position] = documentElem.style.top;
         position.zIndex = this.props.userInfo.position.zIndex.map((item, id) => {
-            return (id === this.props.position) ? this.props.userInfo.position.zIndex.length : 0;
+            return id === this.props.position
+                ? this.props.userInfo.position.zIndex.length
+                : 0;
         });
         this.props.setComponentsPosition(position);
     };
@@ -53,13 +55,19 @@ class Draggable extends React.Component {
     onMouseDown = e => {
         const documentElem = this.transporter;
 
-        documentElem.style.zIndex = '1000';
+        documentElem.style.zIndex = "1000";
 
         const offsetX = documentElem.offsetLeft;
 
         const offsetY = documentElem.offsetTop;
 
-        this.setState({down: true, offsetX, offsetY, pageX: e.pageX, pageY: e.pageY});
+        this.setState({
+            down: true,
+            offsetX,
+            offsetY,
+            pageX: e.pageX,
+            pageY: e.pageY
+        });
     };
 
     getTransporter = node => {
@@ -68,11 +76,15 @@ class Draggable extends React.Component {
 
     setCloseButton = lockable => {
         if (lockable) {
-            return <div className="closeButton" onClick={this.props.lockClick(this.props.id)}>
-                <i className="fas fa-times"></i>
-            </div>
+            return (
+                <div
+                    className="closeButton"
+                    onClick={this.props.lockClick(this.props.id)}
+                >
+                    <i className="fas fa-times" />
+                </div>
+            );
         }
-
     };
 
     render() {
@@ -106,4 +118,7 @@ function matchDispatchToProps(dispatch) {
 
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(Draggable);
+export default connect(
+    mapStateToProps,
+    matchDispatchToProps
+)(Draggable);

@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Link, Redirect} from "react-router-dom";
+import {Route, Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {signup} from "../../actions/index";
 import Loader from "react-loader-spinner";
@@ -34,10 +34,24 @@ class SignUp extends React.Component {
                 <div className="signup-form" style={{display: displayForm}}>
                     <div className="form">
                         <h1>Sign Up</h1>
-                        <input type="text" placeholder="Full Name" className="txtb" onChange={this.onUserNameChange}/>
-                        <input type="password" placeholder="Password" className="txtb"
-                               onChange={this.onPasswordChange}/>
-                        <input type="submit" value="Create Account" className="signup-btn" onClick={this.handleSubmit}/>
+                        <input
+                            type="text"
+                            placeholder="Full Name"
+                            className="txtb"
+                            onChange={this.onUserNameChange}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className="txtb"
+                            onChange={this.onPasswordChange}
+                        />
+                        <input
+                            type="submit"
+                            value="Create Account"
+                            className="signup-btn"
+                            onClick={this.handleSubmit}
+                        />
                         <Link to="/SignIn">Sign In?</Link>
                         <Route path="/SignIn" component={SignIn}/>
                     </div>
