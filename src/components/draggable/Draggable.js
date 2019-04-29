@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './Draggable.css';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -19,73 +18,107 @@ class Draggable extends React.Component {
             range: ""
         };
     }
-    onMouseUp = (e) => {
-        this.setState({down: false/*,offsetX: 0,offsetY: 0*/});
+
+    componentDidMount = () => {
+        document.addEventListener('mousemove', (e)=>{
+            const documentElem = this.transporter;
+
+            const {down, offsetX, offsetY, pageX, pageY} = this.state;
+
+            if(down){
+                documentElem.style.left = offsetX + (e.pageX - pageX) + 'px';
+                documentElem.style.top = offsetY + (e.pageY - pageY) + 'px';
+            }
+        });
+    };
+
+
+    onMouseUp = () => {
+        this.setState({ down: false });
+
         const documentElem = this.transporter;
-        documentElem.style.zIndex = '999';
+
+        documentElem.style.zIndex = "999";
+
         const position = this.props.userInfo.position;
+
         position.positionLeft[this.props.position] = documentElem.style.left;
         position.positionTop[this.props.position] = documentElem.style.top;
-        position.zIndex = this.props.userInfo.position.zIndex.map((item,id)=>{
-            if(id===this.props.position){
-               return this.props.userInfo.position.zIndex.length;
-            }
-            else return 0;
-        })
+        position.zIndex = this.props.userInfo.position.zIndex.map((item, id) => {
+            return id === this.props.position
+                ? this.props.userInfo.position.zIndex.length
+                : 0;
+        });
         this.props.setComponentsPosition(position);
-        
     };
-    onMouseMove = (e) => {
-        const documentElem = this.transporter;
-        const {down, offsetX, offsetY, pageX, pageY} = this.state;
-        if(down){
-            documentElem.style.left = offsetX + (e.pageX - pageX) + 'px';
-            documentElem.style.top = offsetY + (e.pageY - pageY) + 'px';
-        }
-    };
-    onMouseDown = (e) => {
 
+    onMouseDown = e => {
         const documentElem = this.transporter;
-        documentElem.style.zIndex = '1000';
+
+        documentElem.style.zIndex = "1000";
+
         const offsetX = documentElem.offsetLeft;
+
         const offsetY = documentElem.offsetTop;
 
-        this.setState({down: true, offsetX, offsetY, pageX: e.pageX, pageY: e.pageY});
+        this.setState({
+            down: true,
+            offsetX,
+            offsetY,
+            pageX: e.pageX,
+            pageY: e.pageY
+        });
     };
 
-    getTransporter = (node) => {this.transporter = node};
+    getTransporter = node => {
+        this.transporter = node
+    };
 
-    setCloseButton = (lockable) =>{
-        if(lockable)
-            return <div className="closeButton" onClick={ this.props.stockClick(this.props.id)}>
-                        <i className="fas fa-times"></i>
-                    </div>
+    setCloseButton = lockable => {
+        if (lockable) {
+            return (
+                <div
+                    className="closeButton"
+                    onClick={this.props.lockClick(this.props.id)}
+                >
+                    <i className="fas fa-times" />
+                </div>
+            );
+        }
     };
 
     render() {
-        const {name,component,lockable} = this.props;
+        const {name, lockable, position, children, userInfo} = this.props;
+
         return (
-            <div className="draggable" ref = {this.getTransporter} style = {{display: this.state.display,
-                left: this.props.userInfo.position.positionLeft[this.props.position],
-                top: this.props.userInfo.position.positionTop[this.props.position],
-                zIndex: this.props.userInfo.position.zIndex[this.props.position]}}>
-                <div className="name" onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp} onMouseMove={this.onMouseMove}>{name}
+            <div className="draggable" ref={this.getTransporter} style={{
+                display: this.state.display,
+                left: userInfo.position.positionLeft[position],
+                top: userInfo.position.positionTop[position],
+                zIndex: userInfo.position.zIndex[position]
+            }}>
+                <div className="name" onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
+                    {name}
                     {this.setCloseButton(lockable)}
                 </div>
-                {component}
+                {children}
             </div>
         )
     }
 }
 
 function mapStateToProps(state) {
-    return{
+    return {
         userInfo: state.userInfo
     };
 }
-function matchDispatchToProps (dispatch){
+
+function matchDispatchToProps(dispatch) {
     return bindActionCreators({setComponentsPosition}, dispatch)
 
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(Draggable);
+export default connect(
+    mapStateToProps,
+    matchDispatchToProps
+)(Draggable);

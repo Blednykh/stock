@@ -20,3 +20,4 @@ export const DONE_BUY = "DONE_BUY";
 export const DONE_SELL = "DONE_SELL";
 export const DONE_TRANSACTION_HISTORY = "DONE_TRANSACTION_HISTORY";
 export const DONE_STOCK_HISTORY = "DONE_STOCK_HISTORY";
+export const LOGOUT = "LOGOUT";

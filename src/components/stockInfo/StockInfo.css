@@ -1,5 +1,6 @@
-.stockInf{
+.stockInf {
     width: 300px;
+    height: 400px;
     text-align: left;
     overflow: hidden;
     position: relative;
@@ -9,66 +10,171 @@
     box-sizing: content-box;
 }
 
-.footer1{
-    background: #545355;
+.stockInfoFooter {
+    background: #424242;
     position: absolute;
     width: 300px;
-    padding: 5px 10px ;
+    padding: 5px 0px;
     color: white;
-    height: 10%;
+    height: 20%;
     bottom: 0px;
+    box-sizing: content-box;
 }
-.info{
-    background: #f4f4f4;
+
+.info {
+    background: #EEEEEE;
     min-height: 40px;
     height: 60px;
     width: 100%;
-    text-align: right;
+    /*text-align: right;*/
     box-sizing: content-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
-.chart_div{
+
+.chart_div {
     background: white;
     height: 250px;
     margin-bottom: 45px;
     position: relative;
 }
-.chart_div select{
+
+.chart_div select {
     position: absolute;
     top: 10px;
-    right: 20px;
+    right: 10px;
     z-index: 1;
 }
 
-.closeButton{
-    background: #545355;
-    margin-right: 20px;
-    color: white;
-    align-self: center;
-    font-weight: normal;
 
-}
-.fa-times{
-    transition: 0.3s;
-}
-.closeButton:hover .fa-times{
-    color: #ffdd2d;
-}
 
-.footer1 button{
+.stockInfoFooter .navigation button {
+    border-radius: 100px;
     border-width: 0px;
-    padding: 3px 10px;
-    margin: 0px 10px;
+    padding: 5px 10px;
+    margin-right: 10px;
     background: white;
+    width: 100px;
 }
-.footer1 button:hover{
+
+.stockInfoFooter .navigation button:hover {
     background: #e6e6e6;
 }
-.stockInfoName{
-    padding-top: 5px;
-    margin-right: 20px;
+
+.stockInfoName {
+    margin-right: 10px;
     font-size: 20px;
 }
-.stockInfoPrice{
-    margin-right: 20px;
+
+.stockInfoPrice {
+    margin-right: 10px;
     font-size: 13px;
+}
+
+.stockInfoImg img {
+    width: 40px;
+    height: 40px;
+    border-radius: 200px;
+    margin-left: 10px;
+
+}
+
+.stockInfoAmount {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    width: 100%;
+}
+
+
+.stockInfoAmount input {
+    width: 150px;
+    height: 30px;
+    text-align: left;
+    padding: 5px 10px;
+    font-size: 15px;
+    border: 0;
+}
+
+.stockInfoAmount input::-webkit-outer-spin-button {
+    margin-left: 30px;
+}
+
+.stockInfoAmount input::-webkit-inner-spin-button {
+    margin-left: 30px;
+}
+
+
+.maxButton {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    border: 2px solid #f1f1f1;
+    margin: 0px 10px;
+    color: #545355;
+    background: white;
+    transition: 0.5s;
+    padding: 0;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.maxButton:hover {
+    background: #f1f1f1;
+}
+
+.sellButton:hover {
+    transform: scale(0.99);
+    background: #ffcdd2;
+}
+
+.buyButton:hover {
+    transform: scale(0.99);
+    background: #C8E6C9;
+}
+
+.stockInfoSum {
+    position: absolute;
+    color: #bcbcbc;
+    font-size: 14px;
+    text-align: right;
+    right: 55px;
+}
+
+.stockInfoNavigation button {
+    border-radius: 100px;
+    border-width: 0px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background: white;
+    width: 100px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.stockInfoNavigation button:disabled {
+    background: #e6e6e6;
+    cursor: auto;
+}
+
+.stockInfoNavigation {
+    background: #424242;
+    position: absolute;
+    bottom: 0px;
+    width: 300px;
+    padding: 5px 10px;
+    color: white;
+    height: 30px;
+    text-align: center;
+    box-sizing: content-box;
+}
+
+.chart_loader{
+    position: absolute;
+    top: 100px;
+    left: 120px;
 }

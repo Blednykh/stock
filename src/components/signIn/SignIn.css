@@ -1,36 +1,40 @@
-.signin-form{
+.signin-form {
     width: 300px;
     padding: 20px;
     text-align: center;
-    background: #487eb0;
-    /*background: url(bg.png);*/
+    background: url("../../img/background.jpg");
+    background-size: 1000px;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     overflow: hidden;
+    box-shadow: 0px 0px 10px #000000b3;
 }
-.signin-form h1{
+
+.signin-form h1 {
     margin-top: 50px;
-    font-family: "montserrat",sans-serif;
+    font-family: "montserrat", sans-serif;
     color: #fff;
     font-size: 40px;
 }
-.signin-form input{
+
+.signin-form input {
     display: block;
     width: 100%;
     height: 44px;
     text-align: center;
     border: none;
-    font-family: "montserrat",sans-serif;
+    font-family: "montserrat", sans-serif;
     outline: none;
 }
 
-.txtb{
-    background: rgba(255,255,255,.5);
+.txtb {
+    background: rgba(255, 255, 255, .5);
     border-radius: 6px;
 }
-.signin-btn{
+
+.signin-btn {
     margin-top: 40px;
     margin-bottom: 20px;
     background: #ffdd2d;
@@ -39,28 +43,33 @@
     transition: 0.8s;
     color: #000;
 }
-.signin-btn:hover{
+
+.signin-btn:hover {
     transform: scale(0.96);
 }
-.signin-form a{
+
+.signin-form a {
     text-decoration: none;
     color: #fff;
-    font-family: "montserrat",sans-serif;
+    font-family: "montserrat", sans-serif;
     font-size: 14px;
     padding: 10px;
     transition: 0.8s;
     display: block;
 }
-.signin-form a:hover{
-    background: rgba(0,0,0,.3);
+
+.signin-form a:hover {
+    background: rgba(0, 0, 0, .3);
 }
-.errorText{
+
+.errorText {
     color: #ffdd2d;
     font-weight: bold;
     font-size: 13px;
     display: none;
 }
-.signin-loader{
+
+.signin-loader {
     position: absolute;
     top: 45%;
     left: 45%;

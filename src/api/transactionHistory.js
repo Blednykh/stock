@@ -1,9 +1,11 @@
+import request from "./request";
+
 export default function transactionHistory(data) {
-    return fetch(
-        `https://stocks-mocks.herokuapp.com/api/transaction/history`,
-        {
-            method: 'GET',
-            headers: new Headers({'Authorization': data.accessToken}),
-        })
-        .then(r => r.json());
+    return request({
+        path: `https://warm-citadel-97897.herokuapp.com/api/transaction/history?search=${
+            data.search
+            }&count=${data.count}&itemId=${data.itemId}`,
+        method: "GET",
+        headers: new Headers({ Authorization: data.accessToken })
+    });
 }

@@ -1,17 +1,18 @@
-.draggable{
+.draggable {
     width: 300px;
     height: auto;
     text-align: left;
-    box-shadow: 5px 5px 5px #000000b3;
+    box-shadow: 0px 0px 10px #000000b3;
     position: absolute;
     -moz-user-select: none;
     -khtml-user-select: none;
     user-select: none;
     overflow: hidden;
 }
-.name{
+
+.name {
     width: 300px;
-    background: #545355;
+    background: #424242;
     padding: 5px 10px;
     position: relative;
     color: white;
@@ -20,17 +21,21 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.closeButton{
-    background: #545355;
+
+.closeButton {
+    background: #424242;
+    margin-right: 20px;
     color: white;
     align-self: center;
     font-weight: normal;
 
 }
-.fa-times{
+
+.fa-times {
     transition: 0.3s;
 }
-.closeButton:hover .fa-times{
-    color: #ffdd2d;
+
+.closeButton:hover .fa-times {
+    color: #FDD835;
 }
 

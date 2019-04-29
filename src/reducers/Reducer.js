@@ -9,43 +9,72 @@ import {
     SET_COMPONENTS_POSITION,
     STOCKS_LOADED,
     DONE_TRANSACTION_HISTORY,
-    DONE_STOCK_HISTORY
+    DONE_STOCK_HISTORY,
+    LOGOUT
 } from "../constants/constants";
 
-export default function (state = {
-        position: {
-            positionTop: ["120px","120px","120px","120px"],
-            positionLeft: ["20px", "350px", "680px", "1010px"],
-            zIndex: [1,2,3,4]
-        }
-    }, action) {
+const initialState = {
+    position: {
+        positionTop: ["120px", "120px", "120px"],
+        positionLeft: ["20px", "350px", "680px"],
+        zIndex: [1, 2, 3, 4]
+    },
+    history: {
+        items: []
+    },
+    showedStocksList: [],
+    stocks: [],
+    items: [],
+    balance: 0,
+    stockHistory: {
+        history: [{data: "", price: 0}]
+    },
+    stockHistoryList: []
+};
+
+export default function (state = initialState, action) {
     switch (action.type) {
         case 'LOAD':
             return action.payload;
         case ADD_TOKEN:
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
+            localStorage.setItem('accessToken', action.payload.accessToken);
+            localStorage.setItem('refreshToken', action.payload.refreshToken);
             return state;
         case ADD_ACCOUNT_INFO:
             return state;
         case ACCOUNT_INFO_LOADING:
-            return { ...state, accountInfoLoading: 'inherit'};
+            return {...state, accountInfoLoading: 'inherit'};
         case SIGN_FAIL:
-            return { ...state, accountInfoLoading: 'none'};
+            return {...state, accountInfoLoading: 'none'};
         case ACCOUNT_INFO_LOADED:
-            return { ...state, ...action.payload, accountInfoLoading: 'none', showedStocksList: []};
+            return {...state, ...action.payload, accountInfoLoading: 'none', showedStocksList: []};
         case STOCKS_LOADED:
-            return { ...state, ...action.payload};
+            return {...state, ...action.payload};
         case ADD_SHOWED_STOCKS:
-            return { ...state, showedStocksList: action.payload};
+            return {...state, showedStocksList: action.payload};
         case DONE_TRANSACTION_HISTORY:
-            return { ...state, history: [action.payload]};
+            return {...state, history: action.payload};
         case DONE_STOCK_HISTORY:
-            return { ...state, stockHistory: action.payload};
+            if (state.stockHistoryList.find(item => {
+                return item.stockId === action.payload.stockId;
+            }) !== undefined) {
+                state.stockHistoryList = state.stockHistoryList.map(item => {
+                    return (item.stockId === action.payload.stockId) ? action.payload : item;
+                });
+            } else {
+                state.stockHistoryList.push(action.payload);
+            }
+            return {...state, stockHistory: action.payload};
         case WRONG_CREDENTIALS:
             return {...state, displayErrorPasswordText: "inherit"};
         case SET_COMPONENTS_POSITION:
             return {...state, position: action.payload};
+        case LOGOUT:
+            state.accessToken = "";
+            state.refreshToken = "";
+            return state;
         default:
             return state;
 

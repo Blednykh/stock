@@ -1,12 +1,10 @@
+import request from './request';
+
 export default function signin(data) {
-     return fetch(
-         'https://warm-citadel-97897.herokuapp.com/api/auth/signin',
-         {
-         method: 'POST',
-         headers: new Headers({ 'Content-Type':  'application/json'}),
-         body:  JSON.stringify(data)
-     })
-         .then(r =>{
-             return r.json();
-         });
+    return request({
+        path: 'https://warm-citadel-97897.herokuapp.com/api/auth/signin',
+        method: 'POST',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: data
+    });
 }
